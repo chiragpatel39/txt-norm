@@ -1,0 +1,73 @@
+Input string: Output string: [date_start]2003[year] November[month] 9[day][date_end]
+Input string: Output string: [date_start]November [month]9[day], 2003[year][date_end]
+Input string: Output string: [date_start]Nov.[month] 9[day], 2003[year][date_end] 
+Input string: Output string: Sunday, [date_start]November [month]9[day], 2003[year][date_end]
+Input string: Output string: [date_start]9[day] November[month] 2003[year][date_end]
+Input string: Output string: [date_start]9[day]. November[month] 2003[year][date_end]
+Input string: Output string: [date_start]9[day] November[month] AD 2003[year][date_end]
+Input string: Output string: [date_start]9[day] November[month] 2003[year][date_end], 18h 14m 12s
+Input string: Output string: Sunday, [date_start]9[day] November[month] 2003[year][date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]2003[year]Nov[month]9[day][date_end]
+Input string: Output string: [date_start]2003[year]Nov[month]09[day][date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]2003[year]/11[month]/9[day][date_end]/18:14:12 
+Input string: Output string: [date_start]Nov[month]/9[day]/2003[year][date_end]
+Input string: Output string: [date_start]11[day]/09[month]/03[year][date_end]
+Input string: Output string: [date_start]9[day]/11[month]/2003[year][date_end] 
+Input string: Output string: [date_start]9[day]/xi[month]/03[year][date_end]
+Input string: Output string: [date_start]9[day].xi[month].03[year][date_end]
+Input string: Output string: [date_start]9[day].XI[month].2003[year][date_end] 
+Input string: Output string: [date_start]9[day]-xi[month].03[year][date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]2003[year].11[month].9[day][date_end] 
+Input string: Output string: [date_start]11[day].9.[month]2003[year][date_end]
+Input string: Output string: [date_start]11[day].09[month].03[year][date_end]
+Input string: Output string: [date_start]9[day].11.[month]2003[year][date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]2003[year]-11[month]-09[day][date_end]
+Input string: Output string: [date_start]2003[year]-11[month]-09[day][date_end]T18:14:12
+Input string: Output string: [date_start]2003[year]-Nov[month]-9[day][date_end]
+Input string: Output string: [date_start]2003[year]-Nov[month]-09[day][date_end]
+Input string: Output string: [date_start]2003[year]-Nov[month]-9[day][date_end], Sunday
+Input string: Output string: [date_start]11[month]-9[day]-2003[year][date_end]
+Input string: Output string: [date_start]09[day]-Nov[month]-2003[year][date_end] 
+Input string: Output string: [date_start]9[month]-11[day]-2003[year][date_end] 
+Input string: Output string: 
+Input string: Output string: [date_start]5[day] October[month] 2004[year][date_end]
+Input string: Output string: [date_start]5[day] October[month], 2004[year][date_end]
+Input string: Output string: [date_start]5[day] of October[month] 2004[year][date_end]
+Input string: Output string: [date_start]5[day] of October[month], 2004[year][date_end]
+Input string: Output string: [date_start]5th[day] October[month] 2004[year][date_end]
+Input string: Output string: [date_start]5th[day] October[month], 2004[year][date_end]
+Input string: Output string: [date_start]5th[day] of October[month] 2004[year][date_end]
+Input string: Output string: [date_start]5th[day] of October[month], 2004[year][date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]October [month]5[day] 2004[year][date_end]
+Input string: Output string: [date_start]October [month]5[day], 2004[year][date_end]
+Input string: Output string: [date_start]October [month]5th[day] 2004[year][date_end]
+Input string: Output string: [date_start]October [month]5th[day], 2004[year][date_end]
+Input string: Output string: [date_start]October [month]the 5[day] 2004[year][date_end]
+Input string: Output string: [date_start]October [month]the 5[day], 2004[year][date_end]
+Input string: Output string: [date_start]October [month]the 5th[day] 2004[year][date_end]
+Input string: Output string: [date_start]October [month]the 5th[day], 2004[year][date_end]
+Input string: Output string: 
+Input string: Output string: # Farsi dates
+Input string: Output string: سلام [date_start]۱۲[day] بهمن[month] ۱۳۶۲[year][date_end]
+Input string: Output string: [date_start]۱۲[day]/۲[month]/۱۳۶۷[year][date_end]
+Input string: Output string: [date_start]۱۳۵۴[year]/۳[month]/۰۴[day][date_end]
+Input string: Output string: [date_start]تیر[month] ۱۳۷۶[year][date_end]
+Input string: Output string: [date_start]۱۲۳۴[year] مرداد[month][date_end]
+Input string: Output string: 
+Input string: Output string: # Hungarian dates
+Input string: Output string: [date_start]Február[month] 1[day]-jén[date_end]
+Input string: Output string: [date_start]2011[year]. október[month] 3[day]-án.[date_end]
+Input string: Output string: [date_start]2011[year].okt[month].03[day][date_end]
+Input string: Output string: [date_start]febr[month]. 29[day].[date_end]
+Input string: Output string: 
+Input string: Output string: [date_start]7[year] BC[date_end]
+Input string: Output string: [date_start]AD 2011[year][date_end] 
+Input string: Output string: [date_start]pre-1900[date_end]
+Input string: Output string: [date_start]post 1900[date_end] 
+Input string: Output string: [date_start]1970s[date_end]
+Input string: 

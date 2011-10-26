@@ -1,0 +1,181 @@
+# grammar for labeling dates in English text
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Sources: http://en.wikipedia.org/wiki/Hyphen#Use_in_date_notation
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+import 'date_common.grm' as common;
+
+# days
+day_ordinal = 
+  tags.AFTER_NON_DIGIT
+  Optimize[
+    (("" | "2" | "3") "1st") | "11th"
+    | "2nd"
+    | "3rd"
+    | ((("" | "1" | "2") bytelib.kDigit) - "0") "th"
+    | "30th"
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+# months
+month_short = 
+  tags.AFTER_NON_ALPHA
+  Optimize[
+      ("jan"   | "Jan"   | "JAN") tags.MONTH_31
+    | ("feb"   | "Feb"   | "FEB" | "febr"  | "Febr"  | "FEBR") tags.MONTH_29
+    | ("mar"   | "Mar"   | "MAR") tags.MONTH_31
+    | ("apr"   | "Apr"   | "APR") tags.MONTH_30
+    | ("maj"   | "Maj"   | "MAJ") tags.MONTH_31
+    | ("jun"   | "Jun"   | "JUN") tags.MONTH_30
+    | ("jul"   | "Jul"   | "JUL") tags.MONTH_31
+    | ("aug"   | "Aug"   | "AUG") tags.MONTH_31
+    | ("sep"   | "Sep"   | "SEP") tags.MONTH_30
+    | ("sept"  | "Sept"  | "SEPT") tags.MONTH_30
+    | ("oct"   | "Oct"   | "OCT") tags.MONTH_31
+    | ("nov"   | "Nov"   | "NOV") tags.MONTH_30
+    | ("dec"   | "Dec"   | "DEC") tags.MONTH_31
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+month_long = 
+  tags.AFTER_NON_ALPHA
+  Optimize[
+      ("january"   | "Januar"   ) tags.MONTH_31
+    | ("february"  | "Februar"  ) tags.MONTH_29
+    | ("march"     | "March"    ) tags.MONTH_31
+    | ("april"     | "Aprilis"  ) tags.MONTH_30
+    | ("may"       | "Majus"    ) tags.MONTH_31
+    | ("june"      | "Junius"   ) tags.MONTH_30
+    | ("july"      | "Julius"   ) tags.MONTH_31
+    | ("august"    | "August"   ) tags.MONTH_31
+    | ("september" | "September") tags.MONTH_30
+    | ("october"   | "October"  ) tags.MONTH_31
+    | ("november"  | "November" ) tags.MONTH_30
+    | ("december"  | "December" ) tags.MONTH_31
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+month = common.MONTH_NUM | month_long | month_short;
+
+# year, including 7 BC, AD 2011 
+year_qualified_tagged = Optimize[
+  ( ("AD"   " "?  common.YEAR_GENERAL tags.YEAR)
+  | ("A.D." " "?  common.YEAR_GENERAL tags.YEAR)
+  | (common.YEAR_GENERAL tags.YEAR " "? "AD")
+  | (common.YEAR_GENERAL tags.YEAR " "? "A.D.")
+  | (common.YEAR_GENERAL tags.YEAR " "? "BC")
+  | (common.YEAR_GENERAL tags.YEAR " "? "B.C.")
+  | ("BC"   " "?  common.YEAR_GENERAL tags.YEAR)
+  | ("B.C." " "?  common.YEAR_GENERAL tags.YEAR)
+  (  "CE"   " "?  common.YEAR_GENERAL tags.YEAR)
+  | ("C.E." " "?  common.YEAR_GENERAL tags.YEAR)
+  | (common.YEAR_GENERAL tags.YEAR " "? "CE")
+  | (common.YEAR_GENERAL tags.YEAR " "? "C.E.")
+  | (common.YEAR_GENERAL tags.YEAR " "? "BCE")
+  | (common.YEAR_GENERAL tags.YEAR " "? "B.C.E.")
+  | ("BCE"   " "?  common.YEAR_GENERAL tags.YEAR)
+  | ("B.C.E." " "?  common.YEAR_GENERAL tags.YEAR) )
+  ];
+  
+year_all_tagged = Optimize[ year_qualified_tagged | common.YEAR tags.YEAR ];
+  
+# DATE FORMATS
+
+# American
+date_US_slash = Optimize[
+  month        tags.MONTH "/"
+  common.DAY   tags.DAY
+  (("/" common.YEAR tags.YEAR) | ("" <1.0>))
+  ];
+
+date_US_dash = Optimize[ 
+  month        tags.MONTH "-" 
+  common.DAY   tags.DAY
+  (("-" common.YEAR tags.YEAR) | ("" <1.0>)) <2.0> # not likely
+  ];
+
+date_US_dot = Optimize[ 
+  month        tags.MONTH "." 
+  common.DAY   tags.DAY
+  (("." common.YEAR tags.YEAR) | ("" <1.0>)) <4.0> # not likely
+  ];
+
+date_US_text = Optimize[ #e.g. October (the) 5(th), 2004
+  (month_long " " | month_short "."?) tags.MONTH " "*
+  "the "? (day_ordinal | common.DAY) tags.DAY 
+  ((("," | " ") " "* year_all_tagged) | ("" <1.0>))
+  ];
+
+date_US = Optimize[
+  date_US_slash | date_US_dash | date_US_dot | date_US_text
+  ];
+  
+# British
+date_GB_slash = Optimize[ 
+  common.DAY   tags.DAY "/" 
+  month        tags.MONTH
+  (("/" common.YEAR tags.YEAR) | ("" <1.0>)) 
+  ];
+
+date_GB_dash = Optimize[
+  common.DAY   tags.DAY   "-"
+  month        tags.MONTH
+  (("-" common.YEAR tags.YEAR) | ("" <1.0>)) <2.0> # not likely
+  ];
+
+date_GB_dot = Optimize[ 
+  common.DAY   tags.DAY "." 
+  month        tags.MONTH
+  (("." common.YEAR tags.YEAR) | ("" <1.0>)) <4.0> # not likely
+  ];
+
+date_GB_text = Optimize[ #e.g. 5(th) (of) October(,) 2004
+  "the "? (day_ordinal | common.DAY) tags.DAY " "+
+  "of "? month tags.MONTH 
+  ((("," | " ") " "* year_all_tagged) | ("" <1.0>))
+  ];
+
+date_GB = Optimize[
+  date_GB_slash | date_GB_dash | date_GB_dot | date_GB_text
+  ];
+
+# Month by itself
+date_month = Optimize[
+  month_long bytelib.kAlpha* tags.MONTH |
+  month_short tags.MONTH "."
+  ];
+
+# Others  
+# I found these on Wikipedia (http://en.wikipedia.org/wiki/Date_formats#Date_format)
+# I don't really know where they are used, but the short month name may be from English
+# E.g. 2003Nov9, 2003Nov09
+date_other_1 = Optimize[
+  common.YEAR_LONG tags.YEAR 
+  month_short      tags.MONTH 
+  common.DAY       tags.DAY
+  ];
+
+# 2003-Nov-9
+# 2003-Nov-09
+date_other_2 = Optimize[
+  common.YEAR_LONG tags.YEAR  "-"
+  month_short      tags.MONTH "-"
+  common.DAY       tags.DAY
+  ];
+
+date_other = Optimize[ date_other_1 | date_other_2 ];
+
+# final grammar
+export DATE_EN = Optimize[
+  ( date_US 
+  | date_GB 
+  | (date_month <1.0>) 
+  | (year_qualified_tagged <1.0>)
+  | date_other )
+  ];

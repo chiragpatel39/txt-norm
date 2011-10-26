@@ -1,0 +1,182 @@
+# tags to be used for date expressions
+# 
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+
+###########################################
+# ALL TAGS
+###########################################
+
+# date position tags
+start_tag  = "[start]";  
+end_tag    = "[end]";    
+year_tag   = "[year]";   
+month_tag  = "[month]";  
+day_tag    = "[day]";    
+date_tags = start_tag | end_tag | year_tag | month_tag | day_tag;
+
+# month-day match tags; place after month
+month_31_tag = ""; #unnecessary; "[month_31]"; 
+month_30_tag = "[month_30]"; 
+month_29_tag = "[month_29]"; 
+
+# expected character environment tags
+after_non_digit_tag  = "[after_non_digit]";
+after_non_alpha_tag  = "[after_non_alpha]";   
+before_non_digit_tag = "[before_non_digit]";  
+before_non_alpha_tag = "[before_non_alpha]"; 
+
+# invalid path tag (must not be part of sigma)
+invalid_tag = "[invalid]";
+
+###########################################
+# TAG INSERTION
+###########################################
+
+# insert date position tags
+export START  = "" : start_tag;
+export END    = "" : end_tag;
+export YEAR   = "" : year_tag;
+export MONTH  = "" : month_tag;
+export DAY    = "" : day_tag;
+
+# insert month-day tags (can be replaced with costs later)
+export MONTH_31 = "" : month_31_tag; 
+export MONTH_30 = "" : month_30_tag; 
+export MONTH_29 = "" : month_29_tag; 
+
+# insert expected character environment tags
+# place these before the date position tags
+export AFTER_NON_DIGIT   = "" : after_non_digit_tag; 
+export BEFORE_NON_DIGIT  = "" : before_non_digit_tag; 
+export AFTER_NON_ALPHA   = "" : after_non_alpha_tag; 
+export BEFORE_NON_ALPHA  = "" : before_non_alpha_tag; 
+
+# insert invalid path tag
+export INVALID = "" : invalid_tag; 
+
+###########################################
+# SIGMAS
+###########################################
+
+# within-date sigma 
+sigma_within_date = 
+  bytelib.kBytes | year_tag | month_tag | day_tag; 
+
+# sigma without date-internal intermediate tags
+export SIGMA = 
+  sigma_within_date | start_tag | end_tag
+  | after_non_digit_tag | before_non_digit_tag
+  | after_non_alpha_tag | before_non_alpha_tag; 
+
+# sigma containing all date and intermediate tags, too
+sigma_intermed = 
+  SIGMA 
+  | month_31_tag | month_30_tag | month_29_tag;
+
+###########################################
+# TAG NAMES - MAKE TAGS READABLE
+###########################################
+
+export NAMES = Optimize[
+  ( (start_tag : "\[date_start\]")
+  | (end_tag   : "\[date_end\]")
+  | (year_tag  : "\[year\]")
+  | (month_tag : "\[month\]")
+  | (day_tag   : "\[day\]")
+  | (month_31_tag   : "\[month_31\]")
+  | (month_30_tag   : "\[month_30\]")
+  | (month_29_tag   : "\[month_29\]")
+  | (after_non_digit_tag   : "\[after_non_digit\]")
+  | (after_non_alpha_tag   : "\[after_non_alpha\]")
+  | (before_non_digit_tag   : "\[before_non_digit\]")
+  | (before_non_alpha_tag   : "\[before_non_alpha\]")
+  | (invalid_tag   : "\[invalid\]")
+  | bytelib.kBytes
+  )*];
+
+###########################################
+# MONTH-DAY MATCH - ADD COSTS
+###########################################
+
+# replace month-tags with costs when day is inappropriate for month; remove remaining month-tags
+
+# ..._right rules: for month/day order
+# ..._left rules: for day/month order
+del_month_tags_29_1_right = Optimize[
+  CDRewrite[month_29_tag : "" <2.0>, 
+            "", 
+            sigma_within_date* ("29") day_tag, 
+            sigma_intermed*]
+  ];
+del_month_tags_29_1_left  = Optimize[
+  CDRewrite[month_29_tag : "" <2.0>, 
+            ("29") day_tag sigma_within_date*, 
+            "", 
+            sigma_intermed*]
+  ];
+del_month_tags_29_2_right = Optimize[
+  CDRewrite[month_29_tag : "" <10.0>, 
+            "", 
+            sigma_within_date* ("30" | "31") day_tag, 
+            sigma_intermed*]
+  ];
+del_month_tags_29_2_left = Optimize[
+  CDRewrite[month_29_tag : "" <10.0>, 
+            ("30" | "31") day_tag sigma_within_date*, 
+            "", 
+            sigma_intermed*]
+  ];
+del_month_tags_30_right = Optimize[
+  CDRewrite[month_30_tag : "" <10.0>, 
+            "", 
+            sigma_within_date* ("31") day_tag, 
+            sigma_intermed*]
+  ];
+del_month_tags_30_left = Optimize[
+  CDRewrite[month_30_tag : "" <10.0>, 
+            ("31") day_tag sigma_within_date*, 
+            "", 
+            sigma_intermed*]
+  ];
+del_month_tags_remaining = Optimize[
+  CDRewrite[(month_29_tag | month_30_tag | month_31_tag) : "", 
+            "", 
+            "", 
+            sigma_intermed*]
+  ];
+export PROCESS_MONTH_DAY_TAGS = Optimize[
+  del_month_tags_29_1_right 
+  @ del_month_tags_29_1_left
+  @ del_month_tags_29_2_right 
+  @ del_month_tags_29_2_left
+  @ del_month_tags_30_right 
+  @ del_month_tags_30_left
+  @ del_month_tags_remaining
+  ];
+
+###########################################
+# EXPECTED CHARACTER - FILTER INVALID PATHS
+###########################################
+
+export PROCESS_CHAR_ENVIR_TAGS = Optimize[
+  CDRewrite[ 
+    ( bytelib.kDigit date_tags* after_non_digit_tag 
+    | before_non_digit_tag date_tags* bytelib.kDigit 
+    | bytelib.kAlpha date_tags* after_non_alpha_tag 
+    | before_non_alpha_tag date_tags* bytelib.kAlpha) 
+    : invalid_tag,
+    "", "", sigma_intermed*
+    ]
+  @ sigma_intermed*
+  @ CDRewrite[
+    ( after_non_digit_tag | before_non_digit_tag 
+    | after_non_alpha_tag | before_non_alpha_tag) 
+    : "",
+    "", "", sigma_intermed*
+    ]
+  ];
