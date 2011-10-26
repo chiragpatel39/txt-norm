@@ -1,0 +1,36 @@
+# date labeling
+# 
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags; 
+import 'date_common.grm' as common; 
+import 'date_en.grm' as date_en; 
+import 'date_de.grm' as date_de; 
+import 'date_fa.grm' as date_fa; 
+import 'date_hu.grm' as date_hu; 
+import 'date_ISO.grm' as date_ISO; 
+import 'date_misc.grm' as date_misc; 
+
+date = 
+  tags.START 
+  Optimize[
+    ( date_en.DATE_EN 
+    | date_de.DATE_DE 
+    | date_fa.DATE_FA 
+    | date_hu.DATE_HU 
+    | date_ISO.DATE_ISO 
+    | date_misc.DATE_MISC )
+    @ tags.PROCESS_MONTH_DAY_TAGS 
+    ]
+  tags.END;
+
+export TAG_DATES = Optimize[
+  #CDRewrite[date, "", "", tags.SIGMA*] # slow to compile, rewrite stimes fails
+  ( (bytelib.kBytes <1.0>)* ((date <1.0>) (bytelib.kBytes <1.0>)*)* )
+  @ tags.PROCESS_CHAR_ENVIR_TAGS
+  @ tags.NAMES
+  ];

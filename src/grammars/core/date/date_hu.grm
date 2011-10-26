@@ -1,0 +1,111 @@
+# grammar for labeling dates in Hungarian text
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Some examples:
+#   2003. november 29. 
+#   2003. nov. 29. 
+#   2003. 11. 29. 
+#   2003. XI. 29.
+#
+# Not handled yet:
+#   i.sz. (AD)
+#   i.e.  (BC)
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+import 'date_common.grm' as common;
+
+# months
+month_short = 
+  tags.AFTER_NON_ALPHA
+  Optimize[
+    ( ("jan"   | "Jan"   | "JAN") tags.MONTH_31
+    | ("feb"   | "Feb"   | "FEB" | "febr"  | "Febr"  | "FEBR") tags.MONTH_29
+    | ("márc"  | "Márc"  | "MÁRC") tags.MONTH_31
+    | ("ápr"   | "Ápr"   | "ÁPR") tags.MONTH_30
+    | ("máj"   | "Máj"   | "MÁJ") tags.MONTH_31
+    | ("jún"   | "Jún"   | "JÚN") tags.MONTH_30
+    | ("júl"   | "Júl"   | "JÚL") tags.MONTH_31
+    | ("aug"   | "Aug"   | "AUG") tags.MONTH_31
+    | ("szept" | "Szept" | "SZEPT") tags.MONTH_30
+    | ("okt"   | "Okt"   | "OKT") tags.MONTH_31
+    | ("nov"   | "Nov"   | "NOV") tags.MONTH_30
+    | ("dec"   | "Dec"   | "DEC") tags.MONTH_31 )
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+month_long = 
+  tags.AFTER_NON_ALPHA
+  Optimize[
+    ( ("január"     | "Január"    ) tags.MONTH_31
+    | ("február"    | "Február"   ) tags.MONTH_29
+    | ("március"    | "Március"   ) tags.MONTH_31
+    | ("április"    | "Április"   ) tags.MONTH_30
+    | ("május"      | "Május"     ) tags.MONTH_31
+    | ("június"     | "Június"    ) tags.MONTH_30
+    | ("július"     | "Július"    ) tags.MONTH_31
+    | ("augusztus"  | "Augusztus" ) tags.MONTH_31
+    | ("szeptember" | "Szeptember") tags.MONTH_30
+    | ("október"    | "Október"   ) tags.MONTH_31
+    | ("november"   | "November"  ) tags.MONTH_30
+    | ("december"   | "December"  ) tags.MONTH_31 )
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+month = common.MONTH_NUM | common.MONTH_ROMAN | month_short | month_long;
+
+# days for months with at most n days
+day_high = # days that go with high-vowel suffixes
+  tags.AFTER_NON_DIGIT
+  ( (("" | "0" | "1" | "2") ("1" | "4" | "5" | "7" | "9"))
+    | "10"
+    | "12" 
+    | "22"
+    | "31" 
+    )
+  tags.BEFORE_NON_DIGIT;
+  
+day_low = # days that go with low-vowel suffixes
+  tags.AFTER_NON_DIGIT
+  ( (("" | "0" | "1" | "2") ("2" | "3" | "6" | "8")) - ("12" | "22")
+    | "20"
+    | "30"
+    )
+  tags.BEFORE_NON_DIGIT;
+
+# suffixes for days (an extra check when day is by itself)
+day_high_suffixes = "e" | "én" | "ére";
+day_low_suffixes = "a" | "án" | "ára";
+
+day_suffixed_tagged = 
+  Optimize[
+    (day_high tags.DAY "-"  day_high_suffixes) |
+    (day_low  tags.DAY "-"  day_low_suffixes ) |
+    ("1"      tags.DAY "-j" day_high_suffixes)
+    ]
+  tags.BEFORE_NON_ALPHA;
+  
+day_tagged = day_suffixed_tagged | (common.DAY tags.DAY <0.1>);
+
+# date formats
+date_regular = Optimize[
+  ((common.YEAR tags.YEAR  ("."|" ") " "*) | ("" <1.0>))
+  (month        tags.MONTH ("."|" ") " "*)
+  (day_tagged              "."?)
+  ];
+
+date_month = Optimize[
+  month_long bytelib.kAlpha* tags.MONTH | 
+  month_short tags.MONTH "."
+  ];
+
+# final grammar
+export DATE_HU = Optimize[
+  ( date_regular 
+  | (day_suffixed_tagged <1.0>) 
+  | (date_month <1.0>) )
+  ];
