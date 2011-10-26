@@ -1,0 +1,8 @@
+python factorize_Western.py test_cardinals_in.txt test_cardinals_factorized.out
+thraxrewrite-tester --far=numbers_Hungarian.far --rule=TEXT_HU < test_cardinals_factorized.out > test_cardinals.out
+
+python factorize_Western.py test_ordinals_in.txt test_ordinals_factorized.out
+thraxrewrite-tester --far=numbers_Hungarian.far --rule=TEXT_HU < test_ordinals_factorized.out > test_ordinals.out
+
+python factorize_Western.py test_decimals_in.txt test_decimals_factorized.out
+thraxrewrite-tester --far=numbers_Hungarian.far --rule=TEXT_HU < test_decimals_factorized.out > test_decimals.out
