@@ -1,0 +1,77 @@
+import 'byte.grm' as bytelib;
+
+sigma_star = bytelib.kBytes*;
+number = bytelib.kDigit+;
+space_eos = (bytelib.kSpace | "[EOS]");
+
+long_to_40 = ("1" : "eDe" <-1.0>)
+      	        | ("2" : "amEve" <-1.0>)
+	        | ("3" : "amEtOn" <-1.0>)
+	        | ("4" : "amEnE" <-1.0>)
+	        | ("5" : "amatOn" <-1.0>)
+	        | ("6" : "amadin" <-1.0>)
+	        | ("7" : "amadre" <-1.0>)
+	        | ("8" : "amEnyi" <-1.0>)
+	        | ("9" : "amashiDeke" <-1.0>)
+	        | ("1<E1>0" : "amEwo" <-1.0>)
+	        | ("2<E1>0" : "ewi" <-1.0>)
+	        | ("3<E1>0" : "egban" <-1.0>)
+	        | ("4<E1>0" : "eka" <-1.0>)
+	        | ("5<E1>0" : "ka xo wo" <-1.0>)
+	        | ("6<E1>0" : "ka xo wi" <-1.0>)
+	        | ("7<E1>0" : "ka xo wi xo wo" <-1.0>)
+;
+
+short_to_7 =  ("1" : "Deka")
+	     | ("2" : "ve" )
+	     | ("3" : "tOn")
+	     | ("4" : "nE")
+	     | ("5" : "atOn")
+	     | ("6" : "adin")
+	     | ("7" : "adre")
+;
+
+numbers_11_to_17 = ("1<E1>" : "wi") short_to_7;
+numbers_21_to_27 = ("2<E1>" : "wi von ") short_to_7;
+numbers_31_to_37 = ("3<E1>" : "gban xo ") short_to_7;
+numbers_41_to_47 = ("4<E1>" : "ka xo ") short_to_7;
+numbers_51_to_57 = ("5<E1>" : "ka xo wo xo ") short_to_7;
+numbers_61_to_67 = ("6<E1>" : "ka xo wi xo ") short_to_7;
+numbers_71_to_77 = ("7<E1>" : "ka xo wi xo wo xo ") short_to_7;
+numbers_81_to_87 = ("8<E1>" : "ka ve xo ") short_to_7;
+numbers_91_to_97 = ("9<E1>" : "ka ve xo wo ") short_to_7;
+
+numbers_8_9_to_99 = ("1<E1>8" : "ve to le wi mE")
+	  	  | ("1<E1>9" : "Deka to le wi mE")
+	  	  | ("2<E1>8" : "ve to le gban mE")
+	  	  | ("2<E1>9" : "Deka to le gban mE")
+	  	  | ("3<E1>8" : "ve to le ka mE")
+	  	  | ("3<E1>9" : "Deka to le ka mE")
+		  | ("4<E1>8" : "ve to le ka xo wo mE")
+	  	  | ("4<E1>9" : "Deka to le ka xo wo mE")
+		  | ("5<E1>8" : "ve to le ka xo wi mE")
+	  	  | ("5<E1>9" : "Deka to le ka xo wi mE")
+		  | ("6<E1>8" : "ve to le ka xo wi xo wo mE")
+	  	  | ("6<E1>9" : "Deka to le ka xo wi xo wo mE")
+		  | ("7<E1>8" : "ve to le ka ve mE")
+	  	  | ("7<E1>9" : "Deka to le ka ve mE")
+		  | ("8<E1>8" : "ve to le ka ve xo wo mE")
+	  	  | ("8<E1>9" : "Deka to le ka ve xo wo mE")
+		  | ("9<E1>8" : "ve to le ka ve xo wi mE")
+	  	  | ("9<E1>9" : "Deka to le ka ve xo wo mE")
+;
+
+numbers_to_99 = Optimize[long_to_40
+			| numbers_11_to_17
+	      		| numbers_21_to_27
+			| numbers_31_to_37
+			| numbers_41_to_47
+			| numbers_51_to_57
+			| numbers_61_to_67
+			| numbers_71_to_77
+			| numbers_81_to_87
+			| numbers_91_to_97
+			| numbers_8_9_to_99]
+; 
+
+export TOP = Optimize[numbers_to_99];
