@@ -1,0 +1,238 @@
+# factorizer.grm
+# Andrew Fowler & Travis Gamble
+# 
+# This grammar will convert a digit string that looks like a number
+# into a factorized string for use in a language grammar. For instance,
+# it will convert as follows:
+# 609000036 --> 6[E2]9[E6]3[E1]6
+#
+# The exported rules are these:
+# WESTERN_FACTORIZATION: Western-style factorization (groups of three)
+# S_ASIAN_FACTORIZATION: South Asian-style factorization (groups of two)
+# E_ASIAN_FACTORIZATION: East Asian-style factorization (two/three groups)
+#
+# By default, zero factors are removed. The following are used to keep zeros:
+# WESTERN_FACTORIZATION_Z: Like Western, but zeros are not removed
+# S_ASIAN_FACTORIZATION_Z: Like South Asian, but zeros are not removed
+# E_ASIAN_FACTORIZATION_Z: Like East Asian, but zeros are not removed
+#
+# VIG_TRANSFORM: Performs a vigesimal transformation on the number. Compose 
+#                with one of the other rules like so:
+#                Final = WESTERN_FACTORIZATION @ VIG_TRANSFORM ;
+#                This will convert 8[E1]7 into 4[20E1]7 and
+#                9[E1]3[E3]1[E2]2[E1]4 into 4[20E1]1[E1]3[E3]1[E2]1[20E1]4
+#                Does not go beyond 100, except within groups
+# OLD_STYLE: Uses the Old European style:
+#            Billion = Thousand Million
+#            Quadrillion = Thousand Trillion
+#            Compose with one of the other rules like so:
+#            Final = WESTERN_FACTORIZATION @ OLD_STYLE ;
+# Note: VIG_TRANSFORM and OLD_STYLE can be used together (in either order),
+#       as long as they come after the main factorization.
+#
+# This grammar accepts digit strings up to 25 digits that do not begin 
+# with zero (also zero alone), but it will accept numbers with 
+# comma/period placeholders, such as 243,255,000 or 98.5432.4321
+# The placeholder must be consistent through the number. Decimals are not
+# yet supported. There is some unresolved ambiguity, such as the number
+# 54.123 -- this could be a East Asian-style number with periods for the
+# placeholders, or some other number with a decimal point. This grammar
+# will accept it as the former.
+#
+# Any number that does not fit one of the predefined formats will cause
+# the grammar to fail. This grammar will not spit back ill-formed strings
+# unchanged. Any language grammar using this grammar should take this fact
+# into account.
+
+
+import 'byte.grm' as bytelib;
+
+digit = bytelib.kDigit;
+zero = "0";
+sigma_star = bytelib.kBytes*;
+
+nonzerodigit = digit - "0";
+remove_percomm = ( ","* : "" ) | ( "."* : "" ) ;
+delchar = bytelib.kBytes : "" ;
+
+# if number has commas/periods, makes sure they are in the right place
+validnum =   nonzerodigit digit{0,2} ( "," digit{3,3} )*         # western
+           | nonzerodigit digit{0,2} ( "." digit{3,3} )*         # western
+           | nonzerodigit digit{0,1} ( "," digit{2,2} )* digit   # s. asian
+           | nonzerodigit digit{0,1} ( "." digit{2,2} )* digit   # s. asian
+           | nonzerodigit digit{0,3} ( "," digit{4,4})*          # e. asian
+           | nonzerodigit digit{0,3} ( "." digit{4,4})*          # e. asian
+           | nonzerodigit digit*  # no placeholders, nonzero
+           | "0"                  # zero
+;
+
+# removes the placeholder commas/periods
+remove_pholders = (remove_percomm digit)* ;
+
+cleannum = Optimize[ validnum @ remove_pholders ] ;
+
+ie1 = "" : "\[E1\]" ; ie2 = "" : "\[E2\]" ;
+ie3 = "" : "\[E3\]" ; ie4 = "" : "\[E4\]" ;
+ie5 = "" : "\[E5\]" ; ie6 = "" : "\[E6\]" ;
+ie7 = "" : "\[E7\]" ; ie8 = "" : "\[E8\]" ;
+ie9 = "" : "\[E9\]" ; ie10 = "" : "\[E10\]" ;
+ie11 = "" : "\[E11\]" ; ie12 = "" : "\[E12\]" ;
+ie13 = "" : "\[E13\]" ; ie14 = "" : "\[E14\]" ;
+ie15 = "" : "\[E15\]" ; ie16 = "" : "\[E16\]" ;
+ie17 = "" : "\[E17\]" ; ie18 = "" : "\[E18\]" ;
+ie19 = "" : "\[E19\]" ; ie20 = "" : "\[E20\]" ;
+ie21 = "" : "\[E21\]" ; ie22 = "" : "\[E22\]" ;
+ie23 = "" : "\[E13\]" ; ie24 = "" : "\[E24\]" ;
+
+# inserts basic base-10 factorization
+addpower_all = 
+               ((((((((((((((((((((((((
+               digit ie24)? 
+               digit ie23)? 
+               digit ie22)? 
+               digit ie21)? 
+               digit ie20)? 
+               digit ie19)? 
+               digit ie18)? 
+               digit ie17)? 
+               digit ie16)? 
+               digit ie15)? 
+               digit ie14)? 
+               digit ie13)? 
+               digit ie12)? 
+               digit ie11)? 
+               digit ie10)? 
+               digit ie9)? 
+               digit ie8)? 
+               digit ie7)? 
+               digit ie6)? 
+               digit ie5)? 
+               digit ie4)? 
+               digit ie3)? 
+               digit ie2)? 
+               digit ie1)? 
+               digit ;
+
+factored_group = "\[" "20"? "E" digit{1,2} "\]" ;
+any_group = "\[" "20"? ("P" | "E") digit{1,2} "\]" ;
+
+
+# these rules remove the factors which aren't in a placeholder group,
+# which are designated by the letter 'P' for now
+
+western_transform = ((factored_group : "") <1.0> )
+                  | ( "\[E24\]" : "\[P24\]" )
+                  | ( "\[E21\]" : "\[P21\]" )
+                  | ( "\[E18\]" : "\[P18\]" )
+                  | ( "\[E15\]" : "\[P15\]" )
+                  | ( "\[E12\]" : "\[P12\]" )
+                  | ( "\[E9\]" : "\[P9\]" )
+                  | ( "\[E6\]" : "\[P6\]" )
+                  | ( "\[E3\]" : "\[P3\]" )
+;
+
+s_asian_transform = ((factored_group : "") <1.0>)
+                  | ( "\[E23\]" : "\[P23\]" )
+                  | ( "\[E21\]" : "\[P21\]" )
+                  | ( "\[E19\]" : "\[P19\]" )
+                  | ( "\[E17\]" : "\[P17\]" )
+                  | ( "\[E15\]" : "\[P15\]" )
+                  | ( "\[E13\]" : "\[P13\]" )
+                  | ( "\[E11\]" : "\[P11\]" )
+                  | ( "\[E9\]" : "\[P9\]" )
+                  | ( "\[E7\]" : "\[P7\]" )
+                  | ( "\[E5\]" : "\[P5\]" )
+                  | ( "\[E3\]" : "\[P3\]" )
+;
+
+e_asian_transform = ((factored_group : "") <1.0>)
+                  | ( "\[E24\]" : "\[P24\]" )
+                  | ( "\[E20\]" : "\[P20\]" )
+                  | ( "\[E16\]" : "\[P16\]" )
+                  | ( "\[E12\]" : "\[P12\]" )
+                  | ( "\[E8\]" : "\[P8\]" )
+                  | ( "\[E4\]" : "\[P4\]" )
+;
+
+# vigesimal mapping
+vig_map = ("2\[E1\]" : "1\[20E1\]" )
+        | ("3\[E1\]" : "1\[20E1\]1\[E1\]" )
+        | ("4\[E1\]" : "2\[20E1\]" )
+        | ("5\[E1\]" : "2\[20E1\]1\[E1\]" )
+        | ("6\[E1\]" : "3\[20E1\]" )
+        | ("7\[E1\]" : "3\[20E1\]1\[E1\]" )
+        | ("8\[E1\]" : "4\[20E1\]" )
+        | ("9\[E1\]" : "4\[20E1\]1\[E1\]" )
+;
+
+# old-style European mapping
+old_map = ( "\[E9\]" : "\[E3\]\[E6\]" )
+          | ( "\[E15\]" : "\[E3\]\[E12\]" )
+          | ( "\[E21\]" : "\[E3\]\[E18\]" )
+;
+
+
+delzero = "0" : "" ;
+
+# expands digit groups between placeholders
+dig_group_expand = ((((delzero | (nonzerodigit ie3)))?
+                      (delzero | (nonzerodigit ie2)))? 
+                      (delzero | (nonzerodigit ie1)))? 
+                      (delzero | nonzerodigit) 
+;
+
+# special rule for languages which do not omit zeros
+dig_group_expand_z = (((digit ie3)? digit ie2)? digit ie1)? digit ;
+
+# removes any group consisting of all zeros
+remove_zero_groups_w = CDRewrite["000" any_group : "", "", "", sigma_star] ;
+remove_zero_groups_sa = CDRewrite["00" any_group : "", "", "", sigma_star] ;
+remove_zero_groups_ea = CDRewrite["0000" any_group : "", "", "", sigma_star] ;
+
+expand_groups = CDRewrite[dig_group_expand, "", (any_group | "[EOS]"), 
+                          sigma_star] ;
+expand_groups_z = CDRewrite[dig_group_expand_z, "", (any_group | "[EOS]"), 
+                            sigma_star] ;
+
+west_fact = digit (western_transform digit)* ;
+s_asian_fact = digit (s_asian_transform digit)* ;
+e_asian_fact = digit (e_asian_transform digit)* ;
+
+single_zero = CDRewrite["" : "0", "[BOS]", "[EOS]", sigma_star] ;
+
+# turns the P factors back into E factors
+PtoE = (("P" : "E") | (digit | "E" | "\[" | "\]"))* ;
+
+factorized_simple_w = Optimize[ cleannum @ addpower_all 
+                              @ west_fact ];
+factorized_simple_sa = Optimize[ cleannum @ addpower_all 
+                               @ s_asian_fact ];
+factorized_simple_ea = Optimize[ cleannum @ addpower_all 
+                               @ e_asian_fact ];
+
+export WESTERN_FACTORIZATION = Optimize[ factorized_simple_w 
+                                       @ remove_zero_groups_w 
+                                       @ expand_groups @ single_zero @ PtoE ];
+export S_ASIAN_FACTORIZATION = Optimize[ factorized_simple_sa 
+                                       @ remove_zero_groups_sa 
+                                       @ expand_groups @ single_zero @ PtoE ];
+export E_ASIAN_FACTORIZATION = Optimize[ factorized_simple_ea 
+                                       @ remove_zero_groups_ea 
+                                       @ expand_groups @ single_zero @ PtoE ];
+
+# these are special rules that leave in the zeros in the factorization
+export WESTERN_FACTORIZATION_Z = Optimize[ factorized_simple_w 
+                                         @ expand_groups_z 
+                                         @ single_zero @ PtoE ] ; 
+export S_ASIAN_FACTORIZATION_Z = Optimize[ factorized_simple_sa 
+                                         @ expand_groups_z 
+                                         @ single_zero @ PtoE ] ; 
+export E_ASIAN_FACTORIZATION_Z = Optimize[ factorized_simple_ea 
+                                         @ expand_groups_z 
+                                         @ single_zero @ PtoE ] ; 
+
+# these are used for vigesimal and old-style factorizations.
+# use them after one of the above six rules.
+export VIG_TRANSFORM = Optimize[ CDRewrite[vig_map, "", "", sigma_star] ] ;
+export OLD_STYLE = Optimize[ CDRewrite[old_map, "", "", sigma_star] ] ;
+
