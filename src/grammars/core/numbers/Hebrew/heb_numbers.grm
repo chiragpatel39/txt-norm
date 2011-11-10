@@ -1,4 +1,9 @@
 import '../factorization/factorizer.grm' as factorization;
+import '../../byte.grm' as bytelib;
+
+del_mas      = ("__MAS":"");
+del_fem      = ("__FEM":"");
+
 
 ins_space    = ("" :  " "       );
 ins_ve       = ("" :  "ו"       );
@@ -191,5 +196,15 @@ m_numbers_to_999999 = Optimize[
 
 #------------------------------ End male ------------------------------
 
-cards = Optimize[f_numbers_to_999999];
-export HEB_NUMBERS = factorization.WESTERN_FACTORIZATION @ cards;
+#first handle the gender. By default the input is 
+num    = bytelib.kDigit+;
+
+mas  = num del_mas;
+fem  = num del_fem;
+
+
+export HEB_NUMBERS = mas @ factorization.WESTERN_FACTORIZATION @ m_numbers_to_999999 |
+                     fem @ factorization.WESTERN_FACTORIZATION @ f_numbers_to_999999 |
+                    (num @ factorization.WESTERN_FACTORIZATION @ m_numbers_to_999999 <1.0>);
+
+
