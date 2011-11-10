@@ -154,8 +154,12 @@ f_numbers_to_999    = Optimize[f_numbers_to_99 | f_numbers_100_to_999];
 f_numbers_1000_to_9999 = 
 Optimize[
   mf_1000_9000|
-  (mf_1000_9000 ins_space ins_ve f_0_9  <-1.0>) |
-  mf_1000_9000 ins_space f_numbers_to_999];
+  mf_1000_9000 ins_space ins_ve f_0_9 |
+  mf_1000_9000 ins_space mf_100_900 |
+  mf_1000_9000 ins_space mf_100_900 ins_space ins_ve f_0_9 |
+  mf_1000_9000 ins_space mf_100_900 ins_space ins_ve mf_20_90 |
+  mf_1000_9000 ins_space ins_ve mf_20_90 |  
+  (mf_1000_9000 ins_space f_numbers_to_999 <1.0>) ];
 
 f_numbers_to_9999 = Optimize[f_numbers_to_999 | f_numbers_1000_to_9999];
 
@@ -179,7 +183,7 @@ m_numbers_100_to_999 =
 Optimize[
   mf_100_900 |
   mf_100_900 ins_space ins_ve m_0_9   |
-  mf_100_900 ins_space m_10_19 |
+  mf_100_900 ins_space ins_ve m_10_19 |
   mf_100_900 ins_space m_numbers_20_to_99]
 ;
 
@@ -188,8 +192,12 @@ m_numbers_to_999    = Optimize[m_numbers_to_99 | m_numbers_100_to_999];
 m_numbers_1000_to_9999 = 
 Optimize[
   mf_1000_9000|
- (mf_1000_9000 ins_space ins_ve m_0_9  <-1.0>) |
-  mf_1000_9000 ins_space m_numbers_to_999];
+  mf_1000_9000 ins_space ins_ve m_0_9 |
+  mf_1000_9000 ins_space mf_100_900 |
+  mf_1000_9000 ins_space mf_100_900 ins_space ins_ve m_0_9 |
+  mf_1000_9000 ins_space mf_100_900 ins_space ins_ve mf_20_90 |
+  mf_1000_9000 ins_space ins_ve mf_20_90 |  
+  (mf_1000_9000 ins_space m_numbers_to_999 <1.0>) ];
 
 m_numbers_to_9999 = Optimize[m_numbers_to_999 | m_numbers_1000_to_9999];
 
