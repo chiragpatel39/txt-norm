@@ -1,0 +1,74 @@
+# grammar for labeling dates in miscellaneous formats
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+import 'date_common.grm' as common;
+
+# 2003/11/9/18:14:12  (not handling the time-part)
+full_misc_1 = Optimize[
+  common.YEAR_LONG tags.YEAR  "/"
+  common.MONTH_NUM tags.MONTH "/"
+  common.DAY       tags.DAY
+  ];
+
+# 2003-11-09T18:14:12 (not handling the time-part, so for it to be recognized, letter must be allowed after it)
+# 2003-11-09
+full_misc_2 = Optimize[
+  common.YEAR_LONG tags.YEAR  "-"
+  common.MONTH_NUM tags.MONTH "-"
+  common.DAY       tags.DAY
+  ];
+
+# 9/xi/03
+full_misc_3 = Optimize[
+  common.DAY          tags.DAY   "/"
+  common.MONTH_ROMAN  tags.MONTH "/"
+  common.YEAR         tags.YEAR  
+  ];
+
+# 9.xi.03
+# 9.XI.2003 
+# 9-xi.03
+# 9.11.2003
+full_misc_4 = Optimize[
+  common.DAY   tags.DAY   ("." | "-")
+  (common.MONTH_NUM | common.MONTH_ROMAN) tags.MONTH "."
+  common.YEAR  tags.YEAR  
+  ];
+
+full_misc = Optimize[
+  full_misc_1
+  | full_misc_2
+  | full_misc_3
+  | full_misc_4
+  ];
+  
+# year formats
+
+# pre-1900, post 1900
+year_misc_2 = Optimize[
+  ( ("pre" ("-" | " ")  common.YEAR_CENTURY)
+  | ("post" ("-" | " ") common.YEAR_CENTURY) )
+  "00"
+  ];
+
+# 1970s  
+year_misc_3 = Optimize[
+  common.YEAR_CENTURY bytelib.kDigit "0s" 
+  ];
+
+year_misc = Optimize[
+  ( year_misc_2
+  | year_misc_3 )
+  ];
+  
+# final grammar
+export DATE_MISC = Optimize[
+  ( full_misc 
+  | (year_misc <1.0>) )
+  ];

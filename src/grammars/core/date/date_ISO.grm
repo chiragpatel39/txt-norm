@@ -1,0 +1,38 @@
+# grammar for labeling dates in miscellaneous formats
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# I could also include: http://library.princeton.edu/departments/tsd/katmandu/reference/months.html
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+import 'date_common.grm' as common;
+
+# some ISO date formats 
+#   YYYY-MM-DD	or	YYYYMMDD
+#   YYYY-MM	(but not YYYYMM)
+date_ISO_1 = Optimize[
+  common.YEAR           tags.YEAR  "-"
+  common.MONTH_NUM      tags.MONTH "-"
+  common.DAY_TWO_DIGIT  tags.DAY
+  ];
+
+date_ISO_2 = Optimize[
+  common.YEAR       tags.YEAR  
+  common.MONTH_NUM  tags.MONTH 
+  common.DAY_TWO_DIGIT  tags.DAY
+  ];
+
+date_ISO_3 = Optimize[
+  common.YEAR       tags.YEAR  "-"
+  common.MONTH_NUM  tags.MONTH
+  ];
+
+export DATE_ISO = Optimize[ 
+  ( date_ISO_1 
+  | date_ISO_2 
+  | (date_ISO_3 <1.0>) )
+  ];
