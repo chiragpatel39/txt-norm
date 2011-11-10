@@ -1,0 +1,230 @@
+# kannada_top.grm
+# Mala Chikka Kempanna
+
+#Kannada one of the languages spoken in India predominantly in the state of Karnataka.
+# This grammar will convert a south-asian factorized string that looks like 9[E1]9[E3][E7] into kannada numeral expansion. 
+#For instance, above string will be converted to  as follows:
+# 9[E1]9[E3][E7] --> ತೊಂಬತ್ತ್ ಒಂಭತ್ತು ಸಾವಿರ ಕೋಟಿ 
+# which reads in english as ninety nine thousand crores
+#
+# The exported rules are:
+# KANNADA_CARINALS_ORDINALS: This grammar translates both cardinal and ordinal factorized strings
+#
+#
+# This grammar accepts digit strings factorized up to 12 digits in south-asian format that #do not begin 
+# with zero (also zero alone)
+
+# The grammar will fail for numbers beyond 12 digits as in kannada crore is the highest #numeral representation and we can have thousands of crores.
+
+
+import 'byte.grm' as bytelib;
+import 'factorizer.grm' as factorizerlib;
+
+insspace = "" : " ";
+
+
+
+units =
+	   ("1" : "ಒಂದು")
+	| ("2" : "ಎರಡು")
+	| ("3" : "ಮೂರು")
+	| ("4" : "ನಾಲ್ಕು")
+	| ("5" : "ಐದು")
+	| ("6" : "ಆರು")
+	| ("7" : "ಏಳು")
+	| ("8" : "ಎಂಟು")
+	| ("9" : "ಒಂಭತ್ತು")
+;
+
+teens = 
+	("1\[E1\]" : "ಹತ್ತು" <-1.0>)
+	| ("1\[E1\]1" : "ಹನ್ನೊಂದು" <-2.0>)
+	| ("1\[E1\]2" : "ಹನ್ನೆರಡು" <-1.0>)
+	| ("1\[E1\]3" : "ಹದಿಮೂರು" <-1.0>)
+	| ("1\[E1\]4" : "ಹದಿನಾಲ್ಕು" <-1.0>)
+	| ("1\[E1\]5" : "ಹದಿನೈದು" <-1.0>)
+	| ("1\[E1\]6" : "ಹದಿನಾರು" <-1.0>)
+	| ("1\[E1\]7" : "ಹದಿನೇಳು" <-1.0>)
+	| ("1\[E1\]8" : "ಹದಿನೆಂಟು" <-1.0>)
+	| ("1\[E1\]9" : "ಹತ್ತೊಂಬತ್ತು" <-1.0>)
+;
+
+decades = 
+	("2\[E1\]" : "ಇಪ್ಪತ್ತು" <-1.0>)
+	| ("3\[E1\]" : "ಮುವತ್ತು" <-1.0>)
+	| ("4\[E1\]" : "ನಲವತ್ತು" <-1.0>)
+	| ("5\[E1\]" : "ಐವತ್ತು" <-1.0>)
+	| ("6\[E1\]" : "ಅರವತ್ತು" <-1.0>)
+	| ("7\[E1\]" : "ಎಪ್ಪತ್ತು" <-1.0>)
+	| ("8\[E1\]" : "ಎಂಬತ್ತು" <-1.0>)
+	| ("9\[E1\]" : "ತೊಂಬತ್ತು" <-1.0>)
+
+;
+
+# The decades change their form when used with increments like in 21 22 etc. So this rule takes care of it.
+decades_form1 = 
+	("2\[E1\]" : "ಇಪ್ಪತ್ತ್" <-1.0>)
+	| ("3\[E1\]" : "ಮುವತ್ತ್" <-1.0>)
+	| ("4\[E1\]" : "ನಲವತ್ತ್" <-1.0>)
+	| ("5\[E1\]" : "ಐವತ್ತ್" <-1.0>)
+	| ("6\[E1\]" : "ಅರವತ್ತ್" <-1.0>)
+	| ("7\[E1\]" : "ಎಪ್ಪತ್ತ್" <-1.0>)
+	| ("8\[E1\]" : "ಎಂಬತ್ತ್" <-1.0>)
+	| ("9\[E1\]" : "ತೊಂಬತ್ತ್" <-1.0>)
+
+;
+
+numbers_20_to_99 = decades | decades_form1 insspace units ;
+
+numbers_to_99 = Optimize[units | teens | numbers_20_to_99];
+
+hundreds = units insspace ("[E2]" : "ನೂರು") ;
+hundreds_form1 = units insspace ("[E2]" : "ನೂರ") ;
+numbers_100_to_999 = 
+Optimize[
+  hundreds |
+  hundreds_form1 insspace units |
+  hundreds_form1 insspace teens |
+  hundreds_form1 insspace numbers_20_to_99]
+;
+
+numbers_to_999 = Optimize[numbers_to_99 | numbers_100_to_999];
+
+thousands = numbers_to_99 insspace ("[E3]" : "ಸಾವಿರ") ;
+thousands_form1 = numbers_to_99 insspace ("[E3]" : "ಸಾವಿರದ") ;
+numbers_1000_to_99thousand999 = 
+Optimize[
+  thousands |
+  thousands_form1  insspace units |
+  thousands_form1 insspace teens |
+  thousands_form1 insspace numbers_20_to_99 |
+  thousands_form1 insspace numbers_100_to_999]
+;
+numbers_to_99thousand999 = Optimize[numbers_to_999 | numbers_1000_to_99thousand999];
+
+
+lakhs = numbers_to_99 insspace ("[E5]" : "ಲಕ್ಷ");
+numbers_1lakh_to_99lakh_99thousand999 =
+Optimize[
+   lakhs |
+   lakhs  insspace units |
+   lakhs  insspace teens |
+   lakhs insspace numbers_20_to_99 |
+   lakhs  insspace numbers_100_to_999 |
+   lakhs  insspace numbers_1000_to_99thousand999]
+;  
+numbers_to_99lakh_99thousand999 = Optimize[numbers_to_99thousand999 | numbers_1lakh_to_99lakh_99thousand999];
+
+crores = numbers_to_99thousand999 insspace ("[E7]" : "ಕೋಟಿ");
+numbers_1crore_to_99999crore_99lakh_99thousand999 =
+Optimize[
+   crores |
+   crores  insspace units |
+   crores  insspace teens |
+   crores insspace numbers_20_to_99 |
+   crores  insspace numbers_100_to_999 |
+   crores  insspace numbers_1000_to_99thousand999 |
+   crores  insspace numbers_1lakh_to_99lakh_99thousand999]
+;  
+numbers_to_99999crore_99lakh_99thousand999 = Optimize[numbers_to_99lakh_99thousand999 | numbers_1crore_to_99999crore_99lakh_99thousand999];
+
+
+
+#Rules for ordinal numbers
+
+ord_units =
+	   ("1st" : "ಒಂದನೇ")
+	| ("2nd" : "ಎರಡನೇ")
+	| ("3rd" : "ಮೂರನೇ")
+	| ("4th" : "ನಾಲ್ಕನೇ")
+	| ("5th" : "ಐದನೇ")
+	| ("6th" : "ಆರನೇ")
+	| ("7th" : "ಏಳನೇ")
+	| ("8th" : "ಎಂಟನೇ")
+	| ("9th" : "ಒಂಬತ್ತನೇ")
+;
+
+ord_teens = 
+	("1\[E1\]th" : "ಹತ್ತನೇ" <-1.0>)
+	| ("1\[E1\]1th" : "ಹನ್ನೊಂದನೇ" <-2.0>)
+	| ("1\[E1\]2th" : "ಹನ್ನೆರಡನೇ" <-1.0>)
+	| ("1\[E1\]3th" : "ಹದಿಮೂರನೇ" <-1.0>)
+	| ("1\[E1\]4th" : "ಹದಿನಾಲ್ಕನೇ" <-1.0>)
+	| ("1\[E1\]5th" : "ಹದಿನೈದನೇ" <-1.0>)
+	| ("1\[E1\]6th" : "ಹದಿನಾರನೇ" <-1.0>)
+	| ("1\[E1\]7th" : "ಹದಿನೇಳನೇ" <-1.0>)
+	| ("1\[E1\]8th" : "ಹದಿನೆಂಟನೇ" <-1.0>)
+	| ("1\[E1\]9th" : "ಹತ್ತೊಂಬತ್ತನೇ" <-1.0>)
+;
+
+ord_decades = 
+	("2\[E1\]th" : "ಇಪ್ಪತ್ತನೇ" <-1.0>)
+	| ("3\[E1\]th" : "ಮುವತ್ತನೇ" <-1.0>)
+	| ("4\[E1\]th" : "ನಲವತ್ತನೇ" <-1.0>)
+	| ("5\[E1\]th" : "ಐವತ್ತನೇ" <-1.0>)
+	| ("6\[E1\]th" : "ಅರವತ್ತನೇ" <-1.0>)
+	| ("7\[E1\]th" : "ಎಪ್ಪತ್ತನೇ" <-1.0>)
+	| ("8\[E1\]th" : "ಎಂಬತ್ತನೇ" <-1.0>)
+	| ("9\[E1\]th" : "ತೊಂಬತ್ತನೇ" <-1.0>)
+
+;
+
+ord_numbers_20_to_99 = ord_decades | decades_form1 insspace ord_units ;
+
+ord_numbers_to_99 = Optimize[ord_units | ord_teens | ord_numbers_20_to_99];
+
+ord_hundreds = units insspace ("[E2]th" : "ನೂರನೇ") ;
+ord_hundreds_form1 = units insspace ("[E2]" : "ನೂರ") ;
+ord_numbers_100_to_999 = 
+Optimize[
+  ord_hundreds |
+  ord_hundreds_form1 insspace ord_units |
+  ord_hundreds_form1 insspace ord_teens |
+  ord_hundreds_form1 insspace ord_numbers_20_to_99]
+;
+
+ord_numbers_to_999 = Optimize[ord_numbers_to_99 | ord_numbers_100_to_999];
+
+ord_thousands = numbers_to_99 insspace ("[E3]th" : "ಸಾವಿರದ") ;
+ord_thousands_form1 = numbers_to_99 insspace ("[E3]" : "ಸಾವಿರದ") ;
+ord_numbers_1000_to_99thousand999 = 
+Optimize[
+  ord_thousands |
+  ord_thousands_form1  insspace ord_units |
+  ord_thousands_form1 insspace ord_teens |
+  ord_thousands_form1 insspace ord_numbers_20_to_99 |
+  ord_thousands_form1 insspace ord_numbers_100_to_999]
+;
+ord_numbers_to_99thousand999 = Optimize[ord_numbers_to_999 | ord_numbers_1000_to_99thousand999];
+
+
+ord_lakhs = numbers_to_99 insspace ("[E5]th" : "ಲಕ್ಷದ");
+ord_numbers_1lakh_to_99lakh_99thousand999 =
+Optimize[
+   ord_lakhs |
+   lakhs  insspace ord_units |
+   lakhs  insspace ord_teens |
+   lakhs insspace ord_numbers_20_to_99 |
+   lakhs  insspace ord_numbers_100_to_999 |
+   lakhs  insspace ord_numbers_1000_to_99thousand999]
+;  
+ord_numbers_to_99lakh_99thousand999 = Optimize[ord_numbers_to_99thousand999 | ord_numbers_1lakh_to_99lakh_99thousand999];
+
+ord_crores = numbers_to_99thousand999 insspace ("[E7]" : "ಕೋಟಿಯ");
+ord_numbers_1crore_to_99999crore_99lakh_99thousand999 =
+Optimize[
+   ord_crores |
+   crores  insspace ord_units |
+   crores  insspace ord_teens |
+   crores insspace ord_numbers_20_to_99 |
+   crores  insspace ord_numbers_100_to_999 |
+   crores  insspace ord_numbers_1000_to_99thousand999 |
+   crores  insspace ord_numbers_1lakh_to_99lakh_99thousand999]
+;  
+ord_numbers_to_99999crore_99lakh_99thousand999 = Optimize[ord_numbers_to_99lakh_99thousand999 | ord_numbers_1crore_to_99999crore_99lakh_99thousand999];
+
+
+
+export KANNADA_CARINALS_ORDINALS = Optimize[numbers_to_99999crore_99lakh_99thousand999 | ord_numbers_to_99999crore_99lakh_99thousand999];
+
+export KANNADA_TOP = factorizerlib.S_ASIAN_FACTORIZATION @ KANNADA_CARINALS_ORDINALS ;

@@ -1,0 +1,260 @@
+TOP|1|uno
+TOP|2|due
+TOP|4|quattro
+TOP|1<E1>1|undici
+TOP|1<E1>4|quattordici
+TOP|1<E1>7|diciassette
+TOP|2<E1>1|ventuno
+TOP|2<E1>8|ventotto
+TOP|3<E1>|trenta
+TOP|4<E1>5|quarantacinque
+TOP|5<E1>3|cinquantatré
+TOP|6<E1>6|sessantasei
+TOP|7<E1>9|settantanove
+TOP|8<E1>2|ottantadue
+TOP|9<E1>4|novantaquattro
+TOP|1<E2>|cento
+TOP|1<E2>1|centouno
+TOP|1<E2>7|centosette
+TOP|1<E2>4<E1>3|centoquarantatré
+TOP|2<E2>|duecento
+TOP|8<E2>|ottocento
+TOP|1<E3>|mille
+TOP|1<E3>1|milleuno
+TOP|1<E3>2<E2>|milleduecento
+TOP|1<E3>5<E2>1|millecinquecentouno
+TOP|2<E3>|duemila
+TOP|6<E3>8<E1>3|seimilaottantatré
+TOP|7<E3>4<E2>5|settemilaquattrocentocinque
+TOP|9<E3>9<E2>9<E1>9|novemilanovecentonovantanove
+TOP|1|uno
+TOP|2|due
+TOP|4|quattro
+TOP|1<E1>1|undici
+TOP|1<E1>4|quattordici
+TOP|1<E1>7|diciassette
+TOP|2<E1>1|ventuno
+TOP|2<E1>8|ventotto
+TOP|3<E1>|trenta
+TOP|4<E1>5|quarantacinque
+TOP|5<E1>3|cinquantatré
+TOP|6<E1>6|sessantasei
+TOP|7<E1>9|settantanove
+TOP|8<E1>2|ottantadue
+TOP|9<E1>4|novantaquattro
+TOP|1<E2>|cento
+TOP|1<E2>1|centouno
+TOP|1<E2>7|centosette
+TOP|1<E2>4<E1>3|centoquarantatré
+TOP|2<E2>|duecento
+TOP|8<E2>|ottocento
+TOP|1<E3>|mille
+TOP|1<E3>1|milleuno
+TOP|1<E3>2<E2>|milleduecento
+TOP|1<E3>5<E2>1|millecinquecentouno
+TOP|2<E3>|duemila
+TOP|6<E3>8<E1>3|seimilaottantatré
+TOP|7<E3>4<E2>5|settemilaquattrocentocinque
+TOP|9<E3>9<E2>9<E1>9|novemilanovecentonovantanove
+TOP|1<E1><E3>9|diecimilanove
+TOP|1<E1>1<E3>1<E1>1|undicimilaundici
+TOP|2<E1>1<E3>3<E1>4|ventunomilatrentaquattro
+TOP|4<E3>3<E2>2<E1>1|quattromilatrecentoventuno
+TOP|1<E3>2<E2>|milleduecento
+TOP|2<E3>|duemila
+TOP|1<E1><E3>|diecimila
+TOP|1<E1>5<E3>|quindicimila
+TOP|1<E2><E3>|centomila
+TOP|1<E6>|un milione
+TOP|2<E6>|due milioni
+TOP|1<E9>|un miliardo
+TOP|9<E3>9<E2>9<E1>9|novemilanovecentonovantanove
+TOP|1<E1><E3>|diecimila
+TOP|1<E1><E3>1|diecimilauno
+TOP|1<E1><E3>9<E1>9|diecimilanovantanove
+TOP|1<E1><E3>1<E2>|diecimilacento
+TOP|1<E1><E3>1<E2>1|diecimilacentouno
+TOP|9<E1>9<E3>9<E2>9<E1>9|novantanovemilanovecentonovantanove
+TOP|1<E2><E3>|centomila
+TOP|9<E2><E3>|novecentomila
+TOP|9<E2>9<E1>9<E3>9<E2>9<E1>9|novecentonovantanovemilanovecentonovantanove
+TOP|1<E6>|un milione
+TOP|1<E6>1|un milione uno
+TOP|1<E6>1<E1>|un milione dieci
+TOP|1<E6>9<E1>9|un milione novantanove
+TOP|1<E6>1<E2>|un milione cento
+TOP|1<E6>1<E2>1|un milione centouno
+TOP|1<E6>1<E2>1<E1>|un milione centodieci
+TOP|1<E6>1<E2>9<E1>9|un milione centonovantanove
+TOP|1<E6>1<E3>|un milione mille
+TOP|9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9|nove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1<E1><E6>|dieci milioni
+TOP|9<E1>9<E6>|novantanove milioni
+TOP|1<E2><E6>|cento milioni
+TOP|9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9|novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1<E9>|un miliardo
+TOP|1<E9>1|un miliardo uno
+TOP|1<E9>1<E2>|un miliardo cento
+TOP|1<E9>1<E6>1|un miliardo un milione uno
+TOP|9<E2>9<E1>9<E9>9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9|novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1<E12>|un bilione
+TOP|1<E12>1|un bilione uno
+TOP|1<E12>1<E2>|un bilione cento
+TOP|9<E2>9<E1>9<E12>9<E2>9<E1>9<E9>9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9|novecentonovantanove bilioni novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|2<E1>1º|ventunesimo
+TOP|2<E1>2º|ventiduesimo
+TOP|2<E1>3º|ventitreesimo
+TOP|2<E1>4º|ventiquattresimo
+TOP|2<E1>5º|venticinquesimo
+TOP|2<E1>6º|ventiseiesimo
+TOP|2<E1>7º|ventisettesimo
+TOP|2<E1>8º|ventottesimo
+TOP|2<E1>9º|ventinovesimo
+TOP|2<E1>º|ventesimo
+TOP|3<E1>º|trentesimo
+TOP|4<E1>º|quarantesimo
+TOP|5<E1>º|cinquantesimo
+TOP|6<E1>º|sessantesimo
+TOP|7<E1>º|settantesimo
+TOP|8<E1>º|ottantesimo
+TOP|9<E1>º|novantesimo
+TOP|3<E1>1º|trentunesimo
+TOP|3<E1>2º|trentaduesimo
+TOP|3<E1>3º|trentatreesimo
+TOP|3<E1>6º|trentaseiesimo
+TOP|3<E1>7º|trentasettesimo
+TOP|4<E1>1º|quarantunesimo
+TOP|4<E1>2º|quarantaduesimo
+TOP|4<E1>3º|quarantatreesimo
+TOP|4<E1>6º|quarantaseiesimo
+TOP|5<E1>1º|cinquantunesimo
+TOP|5<E1>2º|cinquantaduesimo
+TOP|5<E1>3º|cinquantatreesimo
+TOP|5<E1>6º|cinquantaseiesimo
+TOP|6<E1>2º|sessantaduesimo
+TOP|6<E1>3º|sessantatreesimo
+TOP|6<E1>6º|sessantaseiesimo
+TOP|7<E1>3º|settantatreesimo
+TOP|7<E1>8º|settantottesimo
+TOP|8<E1>8º|ottantottesimo
+TOP|9<E1>4º|novantaquattresimo
+TOP|1<E2>1º|centounesimo
+TOP|1<E2>2º|centoduesimo
+TOP|1<E2>3º|centotreesimo
+TOP|1<E2>4º|centoquattresimo
+TOP|1<E2>5º|centocinquesimo
+TOP|1<E2>6º|centoseiesimo
+TOP|1<E2>7º|centosettesimo
+TOP|1<E2>8º|centoottesimo
+TOP|1<E2>9º|centonovesimo
+TOP|2<E2>1º|duecentounesimo
+TOP|2<E2>2º|duecentoduesimo
+TOP|2<E2>3º|duecentotreesimo
+TOP|2<E2>5º|duecentocinquesimo
+TOP|2<E2>6º|duecentoseiesimo
+TOP|3<E2>2º|trecentoduesimo
+TOP|4<E2>1º|quattrocentounesimo
+TOP|4<E2>4º|quattrocentoquattresimo
+TOP|4<E2>9º|quattrocentonovesimo
+TOP|1<E3>1º|milleunesimo
+TOP|1<E3>2º|milleduesimo
+TOP|1<E3>3º|milletreesimo
+TOP|1<E3>7<E2>2<E1>9º|millesettecentoventinovesimo
+TOP|3<E3>4<E2>3<E1>5º|tremilaquattrocentotrentacinquesimo
+TOP|8<E3>1<E2>2<E1>8º|ottomilacentoventottesimo
+TOP|2<E1>1º|ventunesimo
+TOP|2<E1>2º|ventiduesimo
+TOP|2<E1>3º|ventitreesimo
+TOP|2<E1>4º|ventiquattresimo
+TOP|2<E1>5º|venticinquesimo
+TOP|2<E1>6º|ventiseiesimo
+TOP|2<E1>7º|ventisettesimo
+TOP|2<E1>8º|ventottesimo
+TOP|2<E1>9º|ventinovesimo
+TOP|2<E1>º|ventesimo
+TOP|3<E1>º|trentesimo
+TOP|4<E1>º|quarantesimo
+TOP|5<E1>º|cinquantesimo
+TOP|6<E1>º|sessantesimo
+TOP|7<E1>º|settantesimo
+TOP|8<E1>º|ottantesimo
+TOP|9<E1>º|novantesimo
+TOP|3<E1>1º|trentunesimo
+TOP|3<E1>2º|trentaduesimo
+TOP|3<E1>3º|trentatreesimo
+TOP|3<E1>6º|trentaseiesimo
+TOP|3<E1>7º|trentasettesimo
+TOP|4<E1>1º|quarantunesimo
+TOP|4<E1>2º|quarantaduesimo
+TOP|4<E1>3º|quarantatreesimo
+TOP|4<E1>6º|quarantaseiesimo
+TOP|5<E1>1º|cinquantunesimo
+TOP|5<E1>2º|cinquantaduesimo
+TOP|5<E1>3º|cinquantatreesimo
+TOP|5<E1>6º|cinquantaseiesimo
+TOP|6<E1>2º|sessantaduesimo
+TOP|6<E1>3º|sessantatreesimo
+TOP|6<E1>6º|sessantaseiesimo
+TOP|7<E1>3º|settantatreesimo
+TOP|7<E1>8º|settantottesimo
+TOP|8<E1>8º|ottantottesimo
+TOP|9<E1>4º|novantaquattresimo
+TOP|1<E2>1º|centounesimo
+TOP|1<E2>2º|centoduesimo
+TOP|1<E2>3º|centotreesimo
+TOP|1<E2>4º|centoquattresimo
+TOP|1<E2>5º|centocinquesimo
+TOP|1<E2>6º|centoseiesimo
+TOP|1<E2>7º|centosettesimo
+TOP|1<E2>8º|centoottesimo
+TOP|1<E2>9º|centonovesimo
+TOP|2<E2>1º|duecentounesimo
+TOP|2<E2>2º|duecentoduesimo
+TOP|2<E2>3º|duecentotreesimo
+TOP|2<E2>5º|duecentocinquesimo
+TOP|2<E2>6º|duecentoseiesimo
+TOP|3<E2>2º|trecentoduesimo
+TOP|4<E2>1º|quattrocentounesimo
+TOP|4<E2>4º|quattrocentoquattresimo
+TOP|4<E2>9º|quattrocentonovesimo
+TOP|9<E1>9<E3>9<E2>9<E1>9º|novantanovemilanovecentonovantanovesimo
+TOP|1<E2><E3>º|centomillesimo
+TOP|9<E2><E3>º|novecentomillesimo
+TOP|9<E2>9<E1>9<E3>9<E2>9<E1>9º|novecentonovantanovemilanovecentonovantanovesimo
+TOP|1<E6>º|milionesimo
+TOP|1<E6>1º|milione primo
+TOP|1<E6>1<E1>º|milione decimo
+TOP|1<E6>9<E1>9º|milione novantanovesimo
+TOP|1<E6>1<E2>º|milione centesimo
+TOP|1<E6>1<E2>1º|milione centounesimo
+TOP|1<E6>1<E2>1<E1>º|milione centodecimo
+TOP|1<E6>1<E2>9<E1>9º|milione centonovantanovesimo
+TOP|1<E6>1<E3>º|milione millesimo
+TOP|9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9º|nove milioni novecentonovantanovemilanovecentonovantanovesimo
+TOP|1<E1><E6>º|dieci milionesimo
+TOP|9<E1>9<E6>º|novantanove milionesimo
+TOP|1<E2><E6>º|cento milionesimo
+TOP|9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9º|novecentonovantanove milioni novecentonovantanovemilanovecentonovantanovesimo
+TOP|1<E9>º|miliardesimo
+TOP|1<E9>1º|miliardo primo
+TOP|1<E9>1<E2>º|miliardo centesimo
+TOP|1<E9>1<E6>1º|miliardo milione primo
+TOP|9<E2>9<E1>9<E9>9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9º|novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanovesimo
+TOP|1<E12>º|bilionesimo
+TOP|1<E12>1º|bilione primo
+TOP|1<E12>1<E2>º|bilione centesimo
+TOP|9<E2>9<E1>9<E12>9<E2>9<E1>9<E9>9<E2>9<E1>9<E6>9<E2>9<E1>9<E3>9<E2>9<E1>9º|novecentonovantanove bilioni novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanovesimo
+TOP|1<E15>º|trilionesimo
+TOP|1<E15>1º|trilione primo
+TOP|1<E15>1<E2>º|trilione centesimo
+TOP|1<E18>º|1<E18>º|biliardesimo
+TOP|1<E18>1º|biliardo primo
+TOP|1<E18>1<E2>º|biliardo centesimo
+TOP|2<E2>2º__MAS|duecentoduesimo__MAS
+TOP|2<E2>2º__FEM|duecentoduesima__FEM
+TOP|2<E2>2ª__FEM|duecentoduesima__FEM
+TOP|2<E2>2ª|duecentoduesima
+TOP|2<E2>2º__MAS__PL|duecentoduesimi__MAS__PL
+TOP|2<E2>2º__FEM__PL|duecentoduesime__FEM__PL
+TOP|2<E2>2ª__FEM__PL|duecentoduesime__FEM__PL
+TOP|1__FEM|una__FEM
