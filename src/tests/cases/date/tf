@@ -1,0 +1,1 @@
+thraxrewrite-tester --far=date.far --rule=TAG_DATES < test_in.txt > test.out

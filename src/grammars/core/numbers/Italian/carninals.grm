@@ -1,0 +1,182 @@
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Copyright 2005-2011 Google, Inc.
+# Author: rws@google.com (Richard Sproat)
+# Numbers above 1000 : Mahsa Yarmohammadi - Masoud Rouhizadeh
+
+import 'byte.grm' as bytelib;
+
+insspace = "" : " ";
+
+delspace = " " : "";
+
+sigma_star = bytelib.kBytes*;
+
+del_e2 = "\<E2\>" : "";
+del_e3 = "\<E3\>" : "";
+del_e6 = "\<E6\>" : "";
+del_e9 = "\<E9\>" : "";
+del_e12 = "\<E12\>" : "";
+del_e15 = "\<E15\>" : "";
+del_e18 = "\<E18\>" : "";
+
+zero  = "0" : "zero";
+
+delzero = "0" : "";
+
+
+card_units =   ("1" : "uno")
+	| ("2" : "due")
+	| ("3" : "tre")
+	| ("4" : "quattro")
+	| ("5" : "cinque")
+	| ("6" : "sei")
+	| ("7" : "sette")
+	| ("8" : "otto")
+	| ("9" : "nove")
+;
+
+card_teens =   ("1\<E1\>" : "dieci")
+	| ("1\<E1\>1" : "undici")
+	| ("1\<E1\>2" : "dodici")
+	| ("1\<E1\>3" : "tredici")
+	| ("1\<E1\>4" : "quattordici")
+	| ("1\<E1\>5" : "quindici")
+	| ("1\<E1\>6" : "sedici")
+	| ("1\<E1\>7" : "diciassette")
+	| ("1\<E1\>8" : "diciotto")
+	| ("1\<E1\>9" : "diciannove")
+;
+
+card_decades =   ("2\<E1\>" : "venti")
+	  | ("3\<E1\>" : "trenta")
+	  | ("4\<E1\>" : "quaranta")
+	  | ("5\<E1\>" : "cinquanta")
+	  | ("6\<E1\>" : "sessanta")
+	  | ("7\<E1\>" : "settanta")
+	  | ("8\<E1\>" : "ottanta")
+	  | ("9\<E1\>" : "novanta")
+;
+
+card_numbers_20_to_99_A = card_decades | card_decades card_units ;
+
+final_v_drop =  CDRewrite[("i" | "a") : "", "t", ("uno" | "otto"), sigma_star];
+tre_rule = CDRewrite["tre" : "tré", "", (bytelib.kSpace | 
+				"[EOS]" | "."), sigma_star];
+
+card_numbers_20_to_99 = Optimize[card_numbers_20_to_99_A @ final_v_drop 
+@ tre_rule];
+
+card_numbers_to_99 = Optimize[card_units | card_teens | card_numbers_20_to_99] ;
+
+
+card_hundred_rule = card_units del_e2 ("" : "cento") ;
+card_one_hundred = CDRewrite["unocento" : "cento", " " | "[BOS]", "", 
+sigma_star];
+card_hundreds = Optimize[card_hundred_rule @ card_one_hundred];
+
+
+card_numbers_100_to_999 = 
+Optimize[
+  card_hundreds |
+  card_hundreds card_numbers_to_99]
+;
+
+card_numbers_to_999 = Optimize[card_numbers_to_99 | card_numbers_100_to_999];
+
+card_thousands_rule = card_numbers_to_999 del_e3 ("" : "mila");
+card_one_thousand = CDRewrite["unomila" : "mille", " " | "[BOS]", "", 
+sigma_star];
+card_thousands = Optimize[card_thousands_rule @ card_one_thousand];
+
+card_numbers_1000_to_999999 =
+Optimize[
+  card_thousands |
+  card_thousands card_numbers_to_999]
+;
+
+card_numbers_to_999999 = Optimize[card_numbers_to_999 | 
+card_numbers_1000_to_999999];
+
+card_millions_rule = card_numbers_to_999 insspace del_e6 ("" : "milioni") ;
+card_one_million = CDRewrite["uno milioni" : "un milione", " " | "[BOS]", "", 
+sigma_star];
+card_millions = Optimize[card_millions_rule  @ card_one_million];
+
+
+
+card_numbers_1M_to_1B =
+	Optimize[
+	    card_millions |
+	    card_millions insspace card_numbers_to_999999]
+;
+
+card_numbers_to_1B = Optimize[card_numbers_to_999999 | card_numbers_1M_to_1B];
+
+card_miliard_rule = card_numbers_to_999 insspace del_e9 ("" : "miliardi") ;
+card_one_miliard = CDRewrite["uno miliardi" : "un miliardo", " " | "[BOS]" , 
+"", sigma_star];
+card_miliard = Optimize[card_miliard_rule @ card_one_miliard];
+
+
+card_numbers_1B_to_1T =
+Optimize[
+   card_miliard |
+   card_miliard insspace card_numbers_to_1B]
+;
+
+card_numbers_to_1T = Optimize[card_numbers_to_1B | card_numbers_1B_to_1T];
+
+card_bilione_rule = card_numbers_to_999 insspace del_e12 ("" : "bilioni") ;
+card_one_bilione = CDRewrite["uno bilioni" : "un bilione", " " | "[BOS]" , 
+"", sigma_star];
+card_bilione = Optimize[card_bilione_rule @ card_one_bilione];
+
+card_numbers_1T_to_1Q =
+Optimize[
+   card_bilione |
+   card_bilione insspace card_numbers_to_1T]
+;
+ 
+card_numbers_to_1Q = Optimize[card_numbers_to_1T | card_numbers_1T_to_1Q];
+
+card_trilione_rule = card_numbers_to_999 insspace del_e15 ("" : "trilioni") ;
+card_one_trilione = CDRewrite["uno trilioni" : "un trilione", " " | "[BOS]" , 
+	"", sigma_star];
+card_trilione = Optimize[card_trilione_rule @ card_one_trilione];
+
+card_numbers_1Q_to_1QT =
+Optimize[
+   card_trilione |
+   card_trilione insspace card_numbers_to_1Q]
+;
+
+card_numbers_to_1QT= Optimize[card_numbers_to_1Q | card_numbers_1Q_to_1QT];
+
+card_biliardo_rule = card_numbers_to_999 insspace del_e18 ("" : "biliardi") ;
+card_one_biliardo = CDRewrite["uno biliardi" : "un biliardo", " " | "[BOS]" , 
+	"", sigma_star];
+card_biliardo = Optimize[card_biliardo_rule @ card_one_biliardo];
+
+card_numbers_1QT_to_1S =
+Optimize[
+   card_biliardo |
+   card_biliardo insspace card_numbers_to_1QT]
+;
+
+card_numbers_to_1S= Optimize[card_numbers_to_1QT | card_numbers_1QT_to_1S];
+
+
+export CARDINALNUMBERS = Optimize[card_numbers_to_1S] ;
+
+
