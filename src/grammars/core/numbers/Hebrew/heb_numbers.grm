@@ -7,10 +7,10 @@ del_fem      = ("__FEM":"");
 
 ins_space    = ("" :  " "       );
 ins_ve       = ("" :  "ו"       );
-ins_elef     = ("" :  "אלף"     );
-ins_million  = ("" :  "מיליון"  );
-ins_milliard = ("" :  "מיליארד" );
-ins_trillion = ("" :  "טריליון" );
+ins_elef     = ("[E3]" :  "אלף"     );
+ins_million  = ("[E3]" :  "מיליון"  );
+ins_milliard = ("[E3]" :  "מיליארד" );
+ins_trillion = ("[E3]" :  "טריליון" );
 
 
 #gender  : male 
@@ -135,7 +135,7 @@ mf_1000_9000= ("1[E3]"    :  "אלף" )
 |("9[E3]"    :  "תשעת אלפים"      )
 ;
 
-mf_rest= ("1<E4>"    :  "עשרת אלפים"  );
+mf_rest= ("1[E1]1[E3]"    :  "עשרת אלפים"  );
 
 #------------------------ Female ------------------------------------
 
@@ -159,9 +159,13 @@ Optimize[
 
 f_numbers_to_9999 = Optimize[f_numbers_to_999 | f_numbers_1000_to_9999];
 
-f_numbers_to_999999 = Optimize[
-       (f_numbers_to_999 ins_space ins_elef ins_space ins_ve f_numbers_to_999 <-1.0>) | 
-       f_numbers_to_9999];
+f_numbers = Optimize[
+        f_numbers_to_999 ins_space ins_trillion ins_space f_numbers_to_999 ins_space ins_milliard ins_space f_numbers_to_999 ins_space ins_million ins_space f_numbers_to_999 ins_space ins_elef ins_space f_numbers_to_999 	
+|        f_numbers_to_999 ins_space ins_milliard ins_space f_numbers_to_999 ins_space ins_million f_numbers_to_999 ins_space ins_elef ins_space f_numbers_to_999 
+|	f_numbers_to_999 ins_space ins_million ins_space f_numbers_to_999 ins_space ins_elef ins_space f_numbers_to_999 
+|        f_numbers_to_999 ins_space ins_elef ins_space f_numbers_to_999 
+|       (f_numbers_to_9999 <-1.0>) 
+|       (mf_rest <-2.0>)] ;
 
 
 #------------------------------ End female ------------------------------
@@ -175,7 +179,7 @@ m_numbers_100_to_999 =
 Optimize[
   mf_100_900 |
   mf_100_900 ins_space ins_ve m_0_9   |
-  mf_100_900 ins_space ins_ve m_10_19 |
+  mf_100_900 ins_space m_10_19 |
   mf_100_900 ins_space m_numbers_20_to_99]
 ;
 
@@ -189,9 +193,14 @@ Optimize[
 
 m_numbers_to_9999 = Optimize[m_numbers_to_999 | m_numbers_1000_to_9999];
 
-m_numbers_to_999999 = Optimize[
-       (m_numbers_to_999 ins_space ins_elef ins_space ins_ve m_numbers_to_999 <-1.0>) | 
-       m_numbers_to_9999];
+m_numbers = Optimize[
+        m_numbers_to_999 ins_space ins_trillion ins_space m_numbers_to_999 ins_space ins_milliard ins_space m_numbers_to_999 ins_space ins_million ins_space m_numbers_to_999 ins_space ins_elef ins_space m_numbers_to_999 	
+|        m_numbers_to_999 ins_space ins_milliard ins_space m_numbers_to_999 ins_space ins_million m_numbers_to_999 ins_space ins_elef ins_space m_numbers_to_999 
+|	m_numbers_to_999 ins_space ins_million ins_space m_numbers_to_999 ins_space ins_elef ins_space m_numbers_to_999 
+|        m_numbers_to_999 ins_space ins_elef ins_space m_numbers_to_999 
+|       (m_numbers_to_9999 <-1.0>) 
+|       (mf_rest <-2.0>)] ;
+
 
 
 #------------------------------ End male ------------------------------
@@ -203,8 +212,8 @@ mas  = num del_mas;
 fem  = num del_fem;
 
 
-export HEB_NUMBERS = mas @ factorization.WESTERN_FACTORIZATION @ m_numbers_to_999999 |
-                     fem @ factorization.WESTERN_FACTORIZATION @ f_numbers_to_999999 |
-                    (num @ factorization.WESTERN_FACTORIZATION @ m_numbers_to_999999 <1.0>);
+export HEB_NUMBERS = mas @ factorization.WESTERN_FACTORIZATION @ m_numbers |
+                     fem @ factorization.WESTERN_FACTORIZATION @ f_numbers |
+                    (num @ factorization.WESTERN_FACTORIZATION @ m_numbers <1.0>);
 
 
