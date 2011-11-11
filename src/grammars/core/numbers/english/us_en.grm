@@ -1,0 +1,82 @@
+# US English numbers to 1E15-1
+# Cardinal and ordinal
+# ordinal assumes right suffix, so things like 13st will make it output strange things
+# USEN_CARDINALS_ONLY is cardinals only
+# USEN_ALL_NUMS is cardinal and ordinal
+import 'byte.grm' as bytelib;
+import 'factorizer.grm' as factors;
+
+sigma_star = bytelib.kBytes*;
+
+ins_tok = "" : " ";
+
+zero = ("0" : "zero");
+units = ("1" : "one")
+	  | ("2" : "two")
+	  | ("3" : "three")
+	  | ("4" : "four")
+	  | ("5" : "five")
+	  | ("6" : "six")
+	  | ("7" : "seven")
+	  | ("8" : "eight")
+	  | ("9" : "nine")
+;
+
+card_to_19 = units 
+	   | ("1[E1]" : "ten")
+	   | ("1[E1]1" : "eleven" <-1.0>)
+	   | ("1[E1]2" : "twelve" <-1.0>)
+	   | ("1[E1]3" : "thirteen" <-1.0>)
+	   | ("1[E1]4" : "fourteen" <-1.0>)
+	   | ("1[E1]5" : "fifteen" <-1.0>)
+	   | ("1[E1]6" : "sixteen" <-1.0>)
+	   | ("1[E1]7" : "seventeen" <-1.0>)
+	   | ("1[E1]8" : "eighteen" <-1.0>)
+	   | ("1[E1]9" : "nineteen" <-1.0>)
+;
+
+decades =  ("2[E1]" : "twenty")
+	  | ("3[E1]" : "thirty")
+	  | ("4[E1]" : "forty")
+	  | ("5[E1]" : "fifty")
+	  | ("6[E1]" : "sixty")
+	  | ("7[E1]" : "seventy")
+	  | ("8[E1]" : "eighty")
+	  | ("9[E1]" : "ninety")
+;
+
+card_to_99 = card_to_19 | decades | decades ins_tok units;
+
+hundred = "[E2]" : "hundred";
+
+card_to_999 = Optimize[card_to_99 | units ins_tok hundred (ins_tok card_to_99)*];
+thousand = "[E3]" : "thousand"; 
+card_to_9999 = card_to_999 | units ins_tok thousand (ins_tok card_to_999)*;
+card_to_1M = card_to_9999
+	       | card_to_999 ins_tok thousand (ins_tok card_to_999)*
+;
+million = "[E6]" : "million";
+card_to_1B = card_to_1M
+	     | card_to_999 ins_tok million (ins_tok card_to_1M)*;
+billion = "[E9]" : "billion";
+card_to_1T = Optimize[card_to_1B
+			| card_to_999 ins_tok billion (ins_tok
+			card_to_1B)*]
+;
+trillion = "[E12]" : "trillion";
+card_to_1Q = Optimize[card_to_1T
+			| card_to_999 ins_tok trillion (ins_tok
+			card_to_1T)*]
+;
+cardinals = Optimize[factors.WESTERN_FACTORIZATION @ card_to_1Q];
+
+
+export USEN_CARDINALS_ONLY = Optimize[cardinals]; 
+ordinal_ending = "th" | "st" | "rd" | "nd";
+cleanup = Optimize[ CDRewrite["onest" : "first", "", "", sigma_star]
+	  @ CDRewrite["twost" : "second", "", "", sigma_star]
+	  @ CDRewrite["threerd" : "third", "", "", sigma_star]
+	  @ CDRewrite["fiveth" : "fifth", "", "", sigma_star]
+	  ]
+;
+export USEN_ALL_NUMS = Optimize[cardinals (ordinal_ending)* @ cleanup];
