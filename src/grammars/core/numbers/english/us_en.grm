@@ -77,6 +77,7 @@ cleanup = Optimize[ CDRewrite["onest" : "first", "", "", sigma_star]
 	  @ CDRewrite["twost" : "second", "", "", sigma_star]
 	  @ CDRewrite["threerd" : "third", "", "", sigma_star]
 	  @ CDRewrite["fiveth" : "fifth", "", "", sigma_star]
+    @ CDRewrite["y" : "ie", "th", "[EOS]", sigma_star]
 	  ]
 ;
 export USEN_ALL_NUMS = Optimize[cardinals (ordinal_ending)* @ cleanup];
