@@ -14,7 +14,6 @@ import 'cur_Lnozero.grm' as cur_Lnozero;
 import 'cur_Lzero.grm' as cur_Lzero;
 import 'cur_center.grm' as cur_center;
 import 'cur_Rzero.grm' as cur_right;
-import 'numbers.grm' as numbers;
 
 sigma_star = bytelib.kBytes*;
 digits = bytelib.kDigit+;
