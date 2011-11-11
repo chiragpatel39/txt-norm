@@ -12,7 +12,7 @@
 import 'byte.grm' as bytelib; 
 import 'factorizer.grm' as factors; 
 ins_tok = "" : "[##]"; 
-
+ins_space = "" : " ";
 sigma_star = bytelib.kBytes*; 
 
 cardinal_units = ("1" : "one")
@@ -48,13 +48,20 @@ cardinal_decades =  ("2[E1]" : "twenty")
                  | ("8[E1]" : "eighty")
                  | ("9[E1]" : "ninety")
 ; 
-
-cardinal_hundreds= ("[E2]" : "hundred")
-                 | ("[E3]" : "thousand")
-                 | ("[E6]" : "million")
+cardinal_to_99 = Optimize[cardinal_units 
+	       	 	 | cardinal_teens
+			 | cardinal_decades (ins_space cardinal_units)*
+]
 ;
 
-ordinal_strings = ("1" : "first")
+cardinal_hundred= ("[E2]" : "hundred");
+cardinal_thousand = ("[E3]" : "thousand");
+cardinal_million =  ("[E6]" : "million");
+cardinal_hundred_to_million =  cardinal_hundred 
+			     | cardinal_thousand 
+			     | cardinal_million;
+
+ord_units = ("1" : "first")
 		 | ("2" : "second")
 		 | ("3" : "third") 
 		 | ("4" : "fourth")
@@ -88,10 +95,10 @@ ord_decades = ("2[E1]" : "twentieth")
             | ("9[E1]" : "ninetieth")
 ;
 
-ord_tens = ("[E2]" : "hundredth")
-         | ("[E3]" : "thousandth")
-         | ("[E6]" : "millionth")
-;
+ord_hundred = ("[E2]" : "hundredth");
+ord_thousand = ("[E3]" : "thousandth");
+ord_million = ("[E6]" : "millionth");
+ord_tens = ord_hundred | ord_thousand | ord_million;
 
 units  = ("one")
 	| ("two") 
@@ -126,8 +133,31 @@ decades = ("twenty")
 	| ("ninety")
 ; 
 
-verns = Optimize[ cardinal_units @ cardinal_teens @ cardinal_decades @ cardinal_hundreds]; 
-ords = Optimize[ ord_units @ ord_teens @ ord_decades @ ord_tens] 
+verns = Optimize[ cardinal_units 
+      		  @ cardinal_teens 
+		  @ cardinal_decades
+		  @ cardinal_hundred_to_million]
+; 
+
+ord_to_19 = ord_units | ord_teens;
+ord_to_99 = ord_to_19 | ord_decades | cardinal_decades ins_space ord_units;
+ord_to_999 = ord_to_99 
+	   | (cardinal_units  ins_space)* cardinal_hundred ins_space ord_to_99 
+	   | (cardinal_units ins_space)* ord_hundred
+;
+ord_to_9999 = ord_to_999
+	    | (cardinal_units ins_space)* cardinal_thousand ins_space ord_to_999 
+	    | (cardinal_units ins_space)* ord_thousand
+;
+
+ord_to_999999 = ord_to_9999
+	      | cardinal_units cardinal_hundred (cardinal_to_99)
+	      ord_thousand
+	      | cardinal_units cardinal_hundred (cardinal_to_99)
+	      ord_to_9999
+;
+ords = Optimize[ ord_to_999999]
+;
 
 ##
  
@@ -139,4 +169,4 @@ brit_ord = factors.WESTERN_FACTORIZATION @ ords;
 export BRIT_COMMON = Optimize[(brit_com ins_AND)+]; 
 export BRIT_ORD = Optimize[brit_ord]; 
 
-export TOP = Optimize[(cardinal_vocabulary  ins_tok)+]; 
+#export TOP = Optimize[(cardinal_vocabulary  ins_tok)+]; 
