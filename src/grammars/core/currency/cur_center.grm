@@ -1,0 +1,400 @@
+import 'byte.grm' as bytelib;
+
+sigma_star = bytelib.kBytes*;
+number = bytelib.kDigit+;
+space_eos = (bytelib.kSpace | "[EOS]" | ".[EOS]" | "?[EOS]");
+
+ruble_tmp_0 = CDRewrite["" : " _\[Kopek\]", number "р" number{1,3}, space_eos, sigma_star];
+ruble_tmp_1 = CDRewrite["р" : " _\[ruble\] ", number, number{1,3}, sigma_star];
+ruble_c = ruble_tmp_0 @ ruble_tmp_1;
+afghani_tmp_0 = CDRewrite["" : " _\[Pul\]", number "؋" number{1,3}, space_eos, sigma_star];
+afghani_tmp_1 = CDRewrite["؋" : " _\[afghani\] ", number, number{1,3}, sigma_star];
+afghani_c = afghani_tmp_0 @ afghani_tmp_1;
+Euro_tmp_0 = CDRewrite["" : " _\[Cent\]", number "€" number{1,3}, space_eos, sigma_star];
+Euro_tmp_1 = CDRewrite["€" : " _\[Euro\] ", number, number{1,3}, sigma_star];
+Euro_c = Euro_tmp_0 @ Euro_tmp_1;
+lek_tmp_0 = CDRewrite["" : " _\[QindarkA\]", number "L" number{1,3}, space_eos, sigma_star];
+lek_tmp_1 = CDRewrite["L" : " _\[lek\] ", number, number{1,3}, sigma_star];
+lek_c = lek_tmp_0 @ lek_tmp_1;
+pound_tmp_0 = CDRewrite["" : " _\[Penny\]", number "£" number{1,3}, space_eos, sigma_star];
+pound_tmp_1 = CDRewrite["£" : " _\[pound\] ", number, number{1,3}, sigma_star];
+pound_c = pound_tmp_0 @ pound_tmp_1;
+dinar_tmp_0 = CDRewrite["" : " _\[Santeem\]", number "دج" number{1,3}, space_eos, sigma_star];
+dinar_tmp_1 = CDRewrite["دج" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar_c = dinar_tmp_0 @ dinar_tmp_1;
+kwanza_tmp_0 = CDRewrite["" : " _\[CAantimo\]", number "Kz" number{1,3}, space_eos, sigma_star];
+kwanza_tmp_1 = CDRewrite["Kz" : " _\[kwanza\] ", number, number{1,3}, sigma_star];
+kwanza_c = kwanza_tmp_0 @ kwanza_tmp_1;
+dollar_tmp_0 = CDRewrite["" : " _\[Cent\]", number "$" number{1,3}, space_eos, sigma_star];
+dollar_tmp_1 = CDRewrite["$" : " _\[dollar\] ", number, number{1,3}, sigma_star];
+dollar_c = dollar_tmp_0 @ dollar_tmp_1;
+dram_tmp_0 = CDRewrite["" : " _\[Luma\]", number "դր" number{1,3}, space_eos, sigma_star];
+dram_tmp_1 = CDRewrite["դր" : " _\[dram\] ", number, number{1,3}, sigma_star];
+dram_c = dram_tmp_0 @ dram_tmp_1;
+florin_tmp_0 = CDRewrite["" : " _\[Cent\]", number "ƒ" number{1,3}, space_eos, sigma_star];
+florin_tmp_1 = CDRewrite["ƒ" : " _\[florin\] ", number, number{1,3}, sigma_star];
+florin_c = florin_tmp_0 @ florin_tmp_1;
+manat_tmp_0 = CDRewrite["" : " _\[QEpik\]", number "m" number{1,3}, space_eos, sigma_star];
+manat_tmp_1 = CDRewrite["m" : " _\[manat\] ", number, number{1,3}, sigma_star];
+manat_c = manat_tmp_0 @ manat_tmp_1;
+dinar1_tmp_0 = CDRewrite["" : " _\[Fils\]", number "دب" number{1,3}, space_eos, sigma_star];
+dinar1_tmp_1 = CDRewrite["دب" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar1_c = dinar1_tmp_0 @ dinar1_tmp_1;
+taka_tmp_0 = CDRewrite["" : " _\[Paisa\]", number "Tk৳" number{1,3}, space_eos, sigma_star];
+taka_tmp_1 = CDRewrite["Tk৳" : " _\[taka\] ", number, number{1,3}, sigma_star];
+taka_c = taka_tmp_0 @ taka_tmp_1;
+ruble1_tmp_0 = CDRewrite["" : " _\[Kapyeyka\]", number "Br" number{1,3}, space_eos, sigma_star];
+ruble1_tmp_1 = CDRewrite["Br" : " _\[ruble\] ", number, number{1,3}, sigma_star];
+ruble1_c = ruble1_tmp_0 @ ruble1_tmp_1;
+franc_tmp_0 = CDRewrite["" : " _\[Centime\]", number "Fr" number{1,3}, space_eos, sigma_star];
+franc_tmp_1 = CDRewrite["Fr" : " _\[franc\] ", number, number{1,3}, sigma_star];
+franc_c = franc_tmp_0 @ franc_tmp_1;
+ngultrum_tmp_0 = CDRewrite["" : " _\[Chetrum\]", number "Nu" number{1,3}, space_eos, sigma_star];
+ngultrum_tmp_1 = CDRewrite["Nu" : " _\[ngultrum\] ", number, number{1,3}, sigma_star];
+ngultrum_c = ngultrum_tmp_0 @ ngultrum_tmp_1;
+rupee_tmp_0 = CDRewrite["" : " _\[Paisa\]", number "₹" number{1,3}, space_eos, sigma_star];
+rupee_tmp_1 = CDRewrite["₹" : " _\[rupee\] ", number, number{1,3}, sigma_star];
+rupee_c = rupee_tmp_0 @ rupee_tmp_1;
+boliviano_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "Bs" number{1,3}, space_eos, sigma_star];
+boliviano_tmp_1 = CDRewrite["Bs" : " _\[boliviano\] ", number, number{1,3}, sigma_star];
+boliviano_c = boliviano_tmp_0 @ boliviano_tmp_1;
+mark_tmp_0 = CDRewrite["" : " _\[Fening\]", number "KM" number{1,3}, space_eos, sigma_star];
+mark_tmp_1 = CDRewrite["KM" : " _\[mark\] ", number, number{1,3}, sigma_star];
+mark_c = mark_tmp_0 @ mark_tmp_1;
+pula_tmp_0 = CDRewrite["" : " _\[Thebe\]", number "P" number{1,3}, space_eos, sigma_star];
+pula_tmp_1 = CDRewrite["P" : " _\[pula\] ", number, number{1,3}, sigma_star];
+pula_c = pula_tmp_0 @ pula_tmp_1;
+real_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "R$" number{1,3}, space_eos, sigma_star];
+real_tmp_1 = CDRewrite["R$" : " _\[real\] ", number, number{1,3}, sigma_star];
+real_c = real_tmp_0 @ real_tmp_1;
+lev_tmp_0 = CDRewrite["" : " _\[Stotinka\]", number "лв" number{1,3}, space_eos, sigma_star];
+lev_tmp_1 = CDRewrite["лв" : " _\[lev\] ", number, number{1,3}, sigma_star];
+lev_c = lev_tmp_0 @ lev_tmp_1;
+kyat_tmp_0 = CDRewrite["" : " _\[Pya\]", number "K" number{1,3}, space_eos, sigma_star];
+kyat_tmp_1 = CDRewrite["K" : " _\[kyat\] ", number, number{1,3}, sigma_star];
+kyat_c = kyat_tmp_0 @ kyat_tmp_1;
+riel_tmp_0 = CDRewrite["" : " _\[Sen\]", number "Rl" number{1,3}, space_eos, sigma_star];
+riel_tmp_1 = CDRewrite["Rl" : " _\[riel\] ", number, number{1,3}, sigma_star];
+riel_c = riel_tmp_0 @ riel_tmp_1;
+escudo_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "Esc" number{1,3}, space_eos, sigma_star];
+escudo_tmp_1 = CDRewrite["Esc" : " _\[escudo\] ", number, number{1,3}, sigma_star];
+escudo_c = escudo_tmp_0 @ escudo_tmp_1;
+yuan_tmp_0 = CDRewrite["" : " _\[Fen\]", number "元" number{1,3}, space_eos, sigma_star];
+yuan_tmp_1 = CDRewrite["元" : " _\[yuan\] ", number, number{1,3}, sigma_star];
+yuan_c = yuan_tmp_0 @ yuan_tmp_1;
+colA3n_tmp_0 = CDRewrite["" : " _\[CAcntimo\]", number "₡" number{1,3}, space_eos, sigma_star];
+colA3n_tmp_1 = CDRewrite["₡" : " _\[colA3n\] ", number, number{1,3}, sigma_star];
+colA3n_c = colA3n_tmp_0 @ colA3n_tmp_1;
+kuna_tmp_0 = CDRewrite["" : " _\[Lipa\]", number "kn" number{1,3}, space_eos, sigma_star];
+kuna_tmp_1 = CDRewrite["kn" : " _\[kuna\] ", number, number{1,3}, sigma_star];
+kuna_c = kuna_tmp_0 @ kuna_tmp_1;
+koruna_tmp_0 = CDRewrite["" : " _\[HalAcA\]", number "Kč" number{1,3}, space_eos, sigma_star];
+koruna_tmp_1 = CDRewrite["Kč" : " _\[koruna\] ", number, number{1,3}, sigma_star];
+koruna_c = koruna_tmp_0 @ koruna_tmp_1;
+krone_tmp_0 = CDRewrite["" : " _\[Are\]", number "kr" number{1,3}, space_eos, sigma_star];
+krone_tmp_1 = CDRewrite["kr" : " _\[krone\] ", number, number{1,3}, sigma_star];
+krone_c = krone_tmp_0 @ krone_tmp_1;
+Pound_tmp_0 = CDRewrite["" : " _\[Pence\]", number "£" number{1,3}, space_eos, sigma_star];
+Pound_tmp_1 = CDRewrite["£" : " _\[Pound\] ", number, number{1,3}, sigma_star];
+Pound_c = Pound_tmp_0 @ Pound_tmp_1;
+nakfa_tmp_0 = CDRewrite["" : " _\[Cent\]", number "Nfk" number{1,3}, space_eos, sigma_star];
+nakfa_tmp_1 = CDRewrite["Nfk" : " _\[nakfa\] ", number, number{1,3}, sigma_star];
+nakfa_c = nakfa_tmp_0 @ nakfa_tmp_1;
+dalasi_tmp_0 = CDRewrite["" : " _\[Butut\]", number "D" number{1,3}, space_eos, sigma_star];
+dalasi_tmp_1 = CDRewrite["D" : " _\[dalasi\] ", number, number{1,3}, sigma_star];
+dalasi_c = dalasi_tmp_0 @ dalasi_tmp_1;
+lari_tmp_0 = CDRewrite["" : " _\[Tetri\]", number "ლ" number{1,3}, space_eos, sigma_star];
+lari_tmp_1 = CDRewrite["ლ" : " _\[lari\] ", number, number{1,3}, sigma_star];
+lari_c = lari_tmp_0 @ lari_tmp_1;
+cedi_tmp_0 = CDRewrite["" : " _\[Pesewa\]", number "₵" number{1,3}, space_eos, sigma_star];
+cedi_tmp_1 = CDRewrite["₵" : " _\[cedi\] ", number, number{1,3}, sigma_star];
+cedi_c = cedi_tmp_0 @ cedi_tmp_1;
+quetzal_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "Q" number{1,3}, space_eos, sigma_star];
+quetzal_tmp_1 = CDRewrite["Q" : " _\[quetzal\] ", number, number{1,3}, sigma_star];
+quetzal_c = quetzal_tmp_0 @ quetzal_tmp_1;
+gourde_tmp_0 = CDRewrite["" : " _\[Centime\]", number "G" number{1,3}, space_eos, sigma_star];
+gourde_tmp_1 = CDRewrite["G" : " _\[gourde\] ", number, number{1,3}, sigma_star];
+gourde_c = gourde_tmp_0 @ gourde_tmp_1;
+forint_tmp_0 = CDRewrite["" : " _\[FillAcr\]", number "Ft" number{1,3}, space_eos, sigma_star];
+forint_tmp_1 = CDRewrite["Ft" : " _\[forint\] ", number, number{1,3}, sigma_star];
+forint_c = forint_tmp_0 @ forint_tmp_1;
+rupiah_tmp_0 = CDRewrite["" : " _\[Sen\]", number "Rp" number{1,3}, space_eos, sigma_star];
+rupiah_tmp_1 = CDRewrite["Rp" : " _\[rupiah\] ", number, number{1,3}, sigma_star];
+rupiah_c = rupiah_tmp_0 @ rupiah_tmp_1;
+rial_tmp_0 = CDRewrite["" : " _\[Dinar\]", number "﷼" number{1,3}, space_eos, sigma_star];
+rial_tmp_1 = CDRewrite["﷼" : " _\[rial\] ", number, number{1,3}, sigma_star];
+rial_c = rial_tmp_0 @ rial_tmp_1;
+dinar2_tmp_0 = CDRewrite["" : " _\[Fils\]", number "عد" number{1,3}, space_eos, sigma_star];
+dinar2_tmp_1 = CDRewrite["عد" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar2_c = dinar2_tmp_0 @ dinar2_tmp_1;
+shekel_tmp_0 = CDRewrite["" : " _\[Agora\]", number "₪" number{1,3}, space_eos, sigma_star];
+shekel_tmp_1 = CDRewrite["₪" : " _\[shekel\] ", number, number{1,3}, sigma_star];
+shekel_c = shekel_tmp_0 @ shekel_tmp_1;
+yen_tmp_0 = CDRewrite["" : " _\[Sen\]", number "¥" number{1,3}, space_eos, sigma_star];
+yen_tmp_1 = CDRewrite["¥" : " _\[yen\] ", number, number{1,3}, sigma_star];
+yen_c = yen_tmp_0 @ yen_tmp_1;
+dinar3_tmp_0 = CDRewrite["" : " _\[Piastre\]", number "دا" number{1,3}, space_eos, sigma_star];
+dinar3_tmp_1 = CDRewrite["دا" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar3_c = dinar3_tmp_0 @ dinar3_tmp_1;
+tenge_tmp_0 = CDRewrite["" : " _\[TAAn\]", number "₸" number{1,3}, space_eos, sigma_star];
+tenge_tmp_1 = CDRewrite["₸" : " _\[tenge\] ", number, number{1,3}, sigma_star];
+tenge_c = tenge_tmp_0 @ tenge_tmp_1;
+shilling_tmp_0 = CDRewrite["" : " _\[Cent\]", number "Sh" number{1,3}, space_eos, sigma_star];
+shilling_tmp_1 = CDRewrite["Sh" : " _\[shilling\] ", number, number{1,3}, sigma_star];
+shilling_c = shilling_tmp_0 @ shilling_tmp_1;
+won_tmp_0 = CDRewrite["" : " _\[Chon\]", number "₩" number{1,3}, space_eos, sigma_star];
+won_tmp_1 = CDRewrite["₩" : " _\[won\] ", number, number{1,3}, sigma_star];
+won_c = won_tmp_0 @ won_tmp_1;
+dinar4_tmp_0 = CDRewrite["" : " _\[Fils\]", number "دك" number{1,3}, space_eos, sigma_star];
+dinar4_tmp_1 = CDRewrite["دك" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar4_c = dinar4_tmp_0 @ dinar4_tmp_1;
+kip_tmp_0 = CDRewrite["" : " _\[Att\]", number "₭" number{1,3}, space_eos, sigma_star];
+kip_tmp_1 = CDRewrite["₭" : " _\[kip\] ", number, number{1,3}, sigma_star];
+kip_c = kip_tmp_0 @ kip_tmp_1;
+lats_tmp_0 = CDRewrite["" : " _\[SantAms\]", number "Ls" number{1,3}, space_eos, sigma_star];
+lats_tmp_1 = CDRewrite["Ls" : " _\[lats\] ", number, number{1,3}, sigma_star];
+lats_c = lats_tmp_0 @ lats_tmp_1;
+pound1_tmp_0 = CDRewrite["" : " _\[Piastre\]", number "لل" number{1,3}, space_eos, sigma_star];
+pound1_tmp_1 = CDRewrite["لل" : " _\[pound\] ", number, number{1,3}, sigma_star];
+pound1_c = pound1_tmp_0 @ pound1_tmp_1;
+rand_tmp_0 = CDRewrite["" : " _\[Cent\]", number "R" number{1,3}, space_eos, sigma_star];
+rand_tmp_1 = CDRewrite["R" : " _\[rand\] ", number, number{1,3}, sigma_star];
+rand_c = rand_tmp_0 @ rand_tmp_1;
+dinar5_tmp_0 = CDRewrite["" : " _\[Dirham\]", number "لد" number{1,3}, space_eos, sigma_star];
+dinar5_tmp_1 = CDRewrite["لد" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar5_c = dinar5_tmp_0 @ dinar5_tmp_1;
+litas_tmp_0 = CDRewrite["" : " _\[Centas\]", number "Lt" number{1,3}, space_eos, sigma_star];
+litas_tmp_1 = CDRewrite["Lt" : " _\[litas\] ", number, number{1,3}, sigma_star];
+litas_c = litas_tmp_0 @ litas_tmp_1;
+denar_tmp_0 = CDRewrite["" : " _\[Deni\]", number "ден" number{1,3}, space_eos, sigma_star];
+denar_tmp_1 = CDRewrite["ден" : " _\[denar\] ", number, number{1,3}, sigma_star];
+denar_c = denar_tmp_0 @ denar_tmp_1;
+ariary_tmp_0 = CDRewrite["" : " _\[Iraimbilanja\]", number "Ar" number{1,3}, space_eos, sigma_star];
+ariary_tmp_1 = CDRewrite["Ar" : " _\[ariary\] ", number, number{1,3}, sigma_star];
+ariary_c = ariary_tmp_0 @ ariary_tmp_1;
+kwacha_tmp_0 = CDRewrite["" : " _\[Tambala\]", number "MK" number{1,3}, space_eos, sigma_star];
+kwacha_tmp_1 = CDRewrite["MK" : " _\[kwacha\] ", number, number{1,3}, sigma_star];
+kwacha_c = kwacha_tmp_0 @ kwacha_tmp_1;
+ringgit_tmp_0 = CDRewrite["" : " _\[Sen\]", number "RM" number{1,3}, space_eos, sigma_star];
+ringgit_tmp_1 = CDRewrite["RM" : " _\[ringgit\] ", number, number{1,3}, sigma_star];
+ringgit_c = ringgit_tmp_0 @ ringgit_tmp_1;
+rufiyaa_tmp_0 = CDRewrite["" : " _\[Laari\]", number "ރ" number{1,3}, space_eos, sigma_star];
+rufiyaa_tmp_1 = CDRewrite["ރ" : " _\[rufiyaa\] ", number, number{1,3}, sigma_star];
+rufiyaa_c = rufiyaa_tmp_0 @ rufiyaa_tmp_1;
+ouguiya_tmp_0 = CDRewrite["" : " _\[Khoums\]", number "UM" number{1,3}, space_eos, sigma_star];
+ouguiya_tmp_1 = CDRewrite["UM" : " _\[ouguiya\] ", number, number{1,3}, sigma_star];
+ouguiya_c = ouguiya_tmp_0 @ ouguiya_tmp_1;
+rupee1_tmp_0 = CDRewrite["" : " _\[Cent\]", number "₨" number{1,3}, space_eos, sigma_star];
+rupee1_tmp_1 = CDRewrite["₨" : " _\[rupee\] ", number, number{1,3}, sigma_star];
+rupee1_c = rupee1_tmp_0 @ rupee1_tmp_1;
+tAPgrAPg_tmp_0 = CDRewrite["" : " _\[MAPngAP\]", number "₮" number{1,3}, space_eos, sigma_star];
+tAPgrAPg_tmp_1 = CDRewrite["₮" : " _\[tAPgrAPg\] ", number, number{1,3}, sigma_star];
+tAPgrAPg_c = tAPgrAPg_tmp_0 @ tAPgrAPg_tmp_1;
+dirham_tmp_0 = CDRewrite["" : " _\[Centime\]", number "دم" number{1,3}, space_eos, sigma_star];
+dirham_tmp_1 = CDRewrite["دم" : " _\[dirham\] ", number, number{1,3}, sigma_star];
+dirham_c = dirham_tmp_0 @ dirham_tmp_1;
+metical_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "MT" number{1,3}, space_eos, sigma_star];
+metical_tmp_1 = CDRewrite["MT" : " _\[metical\] ", number, number{1,3}, sigma_star];
+metical_c = metical_tmp_0 @ metical_tmp_1;
+cA3rdoba_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "C$" number{1,3}, space_eos, sigma_star];
+cA3rdoba_tmp_1 = CDRewrite["C$" : " _\[cA3rdoba\] ", number, number{1,3}, sigma_star];
+cA3rdoba_c = cA3rdoba_tmp_0 @ cA3rdoba_tmp_1;
+naira_tmp_0 = CDRewrite["" : " _\[Kobo\]", number "₦" number{1,3}, space_eos, sigma_star];
+naira_tmp_1 = CDRewrite["₦" : " _\[naira\] ", number, number{1,3}, sigma_star];
+naira_c = naira_tmp_0 @ naira_tmp_1;
+lira_tmp_0 = CDRewrite["" : " _\[KuruA\]", number "TL" number{1,3}, space_eos, sigma_star];
+lira_tmp_1 = CDRewrite["TL" : " _\[lira\] ", number, number{1,3}, sigma_star];
+lira_c = lira_tmp_0 @ lira_tmp_1;
+rial1_tmp_0 = CDRewrite["" : " _\[Baisa\]", number "رع" number{1,3}, space_eos, sigma_star];
+rial1_tmp_1 = CDRewrite["رع" : " _\[rial\] ", number, number{1,3}, sigma_star];
+rial1_c = rial1_tmp_0 @ rial1_tmp_1;
+balboa_tmp_0 = CDRewrite["" : " _\[CentAcsimo\]", number "B/" number{1,3}, space_eos, sigma_star];
+balboa_tmp_1 = CDRewrite["B/" : " _\[balboa\] ", number, number{1,3}, sigma_star];
+balboa_c = balboa_tmp_0 @ balboa_tmp_1;
+guaranA_tmp_0 = CDRewrite["" : " _\[CAcntimo\]", number "₲" number{1,3}, space_eos, sigma_star];
+guaranA_tmp_1 = CDRewrite["₲" : " _\[guaranA\] ", number, number{1,3}, sigma_star];
+guaranA_c = guaranA_tmp_0 @ guaranA_tmp_1;
+sol_tmp_0 = CDRewrite["" : " _\[CAcntimo\]", number "S/" number{1,3}, space_eos, sigma_star];
+sol_tmp_1 = CDRewrite["S/" : " _\[sol\] ", number, number{1,3}, sigma_star];
+sol_c = sol_tmp_0 @ sol_tmp_1;
+peso_tmp_0 = CDRewrite["" : " _\[Centavo\]", number "₱" number{1,3}, space_eos, sigma_star];
+peso_tmp_1 = CDRewrite["₱" : " _\[peso\] ", number, number{1,3}, sigma_star];
+peso_c = peso_tmp_0 @ peso_tmp_1;
+zAoty_tmp_0 = CDRewrite["" : " _\[Grosz\]", number "zł" number{1,3}, space_eos, sigma_star];
+zAoty_tmp_1 = CDRewrite["zł" : " _\[zAoty\] ", number, number{1,3}, sigma_star];
+zAoty_c = zAoty_tmp_0 @ zAoty_tmp_1;
+riyal_tmp_0 = CDRewrite["" : " _\[Dirham\]", number "رق" number{1,3}, space_eos, sigma_star];
+riyal_tmp_1 = CDRewrite["رق" : " _\[riyal\] ", number, number{1,3}, sigma_star];
+riyal_c = riyal_tmp_0 @ riyal_tmp_1;
+ruble2_tmp_0 = CDRewrite["" : " _\[Kopek\]", number "руб" number{1,3}, space_eos, sigma_star];
+ruble2_tmp_1 = CDRewrite["руб" : " _\[ruble\] ", number, number{1,3}, sigma_star];
+ruble2_c = ruble2_tmp_0 @ ruble2_tmp_1;
+dirham1_tmp_0 = CDRewrite["" : " _\[Centime\]", number "د م" number{1,3}, space_eos, sigma_star];
+dirham1_tmp_1 = CDRewrite["د م" : " _\[dirham\] ", number, number{1,3}, sigma_star];
+dirham1_c = dirham1_tmp_0 @ dirham1_tmp_1;
+tAlA_tmp_0 = CDRewrite["" : " _\[Sene\]", number "T" number{1,3}, space_eos, sigma_star];
+tAlA_tmp_1 = CDRewrite["T" : " _\[tAlA\] ", number, number{1,3}, sigma_star];
+tAlA_c = tAlA_tmp_0 @ tAlA_tmp_1;
+dobra_tmp_0 = CDRewrite["" : " _\[CAantimo\]", number "Db" number{1,3}, space_eos, sigma_star];
+dobra_tmp_1 = CDRewrite["Db" : " _\[dobra\] ", number, number{1,3}, sigma_star];
+dobra_c = dobra_tmp_0 @ dobra_tmp_1;
+riyal1_tmp_0 = CDRewrite["" : " _\[Hallallah\]", number "رس" number{1,3}, space_eos, sigma_star];
+riyal1_tmp_1 = CDRewrite["رس" : " _\[riyal\] ", number, number{1,3}, sigma_star];
+riyal1_c = riyal1_tmp_0 @ riyal1_tmp_1;
+dinar6_tmp_0 = CDRewrite["" : " _\[Para\]", number "дин" number{1,3}, space_eos, sigma_star];
+dinar6_tmp_1 = CDRewrite["дин" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar6_c = dinar6_tmp_0 @ dinar6_tmp_1;
+leone_tmp_0 = CDRewrite["" : " _\[Cent\]", number "Le" number{1,3}, space_eos, sigma_star];
+leone_tmp_1 = CDRewrite["Le" : " _\[leone\] ", number, number{1,3}, sigma_star];
+leone_c = leone_tmp_0 @ leone_tmp_1;
+rupee2_tmp_0 = CDRewrite["" : " _\[Cent\]", number "Rs" number{1,3}, space_eos, sigma_star];
+rupee2_tmp_1 = CDRewrite["Rs" : " _\[rupee\] ", number, number{1,3}, sigma_star];
+rupee2_c = rupee2_tmp_0 @ rupee2_tmp_1;
+pound2_tmp_0 = CDRewrite["" : " _\[Piastre\]", number "لس" number{1,3}, space_eos, sigma_star];
+pound2_tmp_1 = CDRewrite["لس" : " _\[pound\] ", number, number{1,3}, sigma_star];
+pound2_c = pound2_tmp_0 @ pound2_tmp_1;
+somoni_tmp_0 = CDRewrite["" : " _\[Diram\]", number "ЅМ" number{1,3}, space_eos, sigma_star];
+somoni_tmp_1 = CDRewrite["ЅМ" : " _\[somoni\] ", number, number{1,3}, sigma_star];
+somoni_c = somoni_tmp_0 @ somoni_tmp_1;
+baht_tmp_0 = CDRewrite["" : " _\[Satang\]", number "฿" number{1,3}, space_eos, sigma_star];
+baht_tmp_1 = CDRewrite["฿" : " _\[baht\] ", number, number{1,3}, sigma_star];
+baht_c = baht_tmp_0 @ baht_tmp_1;
+paEanga_tmp_0 = CDRewrite["" : " _\[Seniti\]", number "T$" number{1,3}, space_eos, sigma_star];
+paEanga_tmp_1 = CDRewrite["T$" : " _\[paEanga\] ", number, number{1,3}, sigma_star];
+paEanga_c = paEanga_tmp_0 @ paEanga_tmp_1;
+dinar7_tmp_0 = CDRewrite["" : " _\[Millime\]", number "دت" number{1,3}, space_eos, sigma_star];
+dinar7_tmp_1 = CDRewrite["دت" : " _\[dinar\] ", number, number{1,3}, sigma_star];
+dinar7_c = dinar7_tmp_0 @ dinar7_tmp_1;
+hryvnia_tmp_0 = CDRewrite["" : " _\[Kopiyka\]", number "₴" number{1,3}, space_eos, sigma_star];
+hryvnia_tmp_1 = CDRewrite["₴" : " _\[hryvnia\] ", number, number{1,3}, sigma_star];
+hryvnia_c = hryvnia_tmp_0 @ hryvnia_tmp_1;
+dirham2_tmp_0 = CDRewrite["" : " _\[Fils\]", number "دإ" number{1,3}, space_eos, sigma_star];
+dirham2_tmp_1 = CDRewrite["دإ" : " _\[dirham\] ", number, number{1,3}, sigma_star];
+dirham2_c = dirham2_tmp_0 @ dirham2_tmp_1;
+vatu_tmp_0 = CDRewrite["" : " _\[None\]", number "Vt" number{1,3}, space_eos, sigma_star];
+vatu_tmp_1 = CDRewrite["Vt" : " _\[vatu\] ", number, number{1,3}, sigma_star];
+vatu_c = vatu_tmp_0 @ vatu_tmp_1;
+bolAvar_tmp_0 = CDRewrite["" : " _\[CAcntimo\]", number "Bs F" number{1,3}, space_eos, sigma_star];
+bolAvar_tmp_1 = CDRewrite["Bs F" : " _\[bolAvar\] ", number, number{1,3}, sigma_star];
+bolAvar_c = bolAvar_tmp_0 @ bolAvar_tmp_1;
+Aang_tmp_0 = CDRewrite["" : " _\[HAo\]", number "₫" number{1,3}, space_eos, sigma_star];
+Aang_tmp_1 = CDRewrite["₫" : " _\[Aang\] ", number, number{1,3}, sigma_star];
+Aang_c = Aang_tmp_0 @ Aang_tmp_1;
+kwacha1_tmp_0 = CDRewrite["" : " _\[Ngwee\]", number "ZK" number{1,3}, space_eos, sigma_star];
+kwacha1_tmp_1 = CDRewrite["ZK" : " _\[kwacha\] ", number, number{1,3}, sigma_star];
+kwacha1_c = kwacha1_tmp_0 @ kwacha1_tmp_1;
+
+tmp_2 = Optimize[ruble_c
+  @ afghani_c
+  @ Euro_c
+  @ lek_c
+  @ pound_c
+  @ dinar_c
+  @ kwanza_c
+  @ dollar_c
+  @ dram_c
+  @ florin_c
+];
+
+tmp_3 = Optimize[manat_c
+  @ dinar1_c
+  @ taka_c
+  @ ruble1_c
+  @ franc_c
+  @ ngultrum_c
+  @ rupee_c
+  @ boliviano_c
+  @ mark_c
+  @ pula_c
+];
+
+tmp_4 = Optimize[real_c
+  @ lev_c
+  @ kyat_c
+  @ riel_c
+  @ escudo_c
+  @ yuan_c
+  @ colA3n_c
+  @ kuna_c
+  @ koruna_c
+  @ krone_c
+];
+
+tmp_5 = Optimize[Pound_c
+  @ nakfa_c
+  @ dalasi_c
+  @ lari_c
+  @ cedi_c
+  @ quetzal_c
+  @ gourde_c
+  @ forint_c
+  @ rupiah_c
+  @ rial_c
+];
+
+tmp_6 = Optimize[dinar2_c
+  @ shekel_c
+  @ yen_c
+  @ dinar3_c
+  @ tenge_c
+  @ shilling_c
+  @ won_c
+  @ dinar4_c
+  @ kip_c
+  @ lats_c
+];
+
+tmp_7 = Optimize[pound1_c
+  @ rand_c
+  @ dinar5_c
+  @ litas_c
+  @ denar_c
+  @ ariary_c
+  @ kwacha_c
+  @ ringgit_c
+  @ rufiyaa_c
+  @ ouguiya_c
+];
+
+tmp_8 = Optimize[rupee1_c
+  @ tAPgrAPg_c
+  @ dirham_c
+  @ metical_c
+  @ cA3rdoba_c
+  @ naira_c
+  @ lira_c
+  @ rial1_c
+  @ balboa_c
+  @ guaranA_c
+];
+
+tmp_9 = Optimize[sol_c
+  @ peso_c
+  @ zAoty_c
+  @ riyal_c
+  @ ruble2_c
+  @ dirham1_c
+  @ tAlA_c
+  @ dobra_c
+  @ riyal1_c
+  @ dinar6_c
+];
+
+tmp_10 = Optimize[leone_c
+  @ rupee2_c
+  @ pound2_c
+  @ somoni_c
+  @ baht_c
+  @ paEanga_c
+  @ dinar7_c
+  @ hryvnia_c
+  @ dirham2_c
+  @ vatu_c
+];
+
+tmp_11 = Optimize[bolAvar_c
+  @ Aang_c
+  @ kwacha1_c
+];
+
+export CENTER = Optimize[tmp_2 @ tmp_3 @ tmp_4 @ tmp_5 @ tmp_6 @ tmp_7 @ tmp_8 @ tmp_9 @ tmp_10 @ tmp_11];
