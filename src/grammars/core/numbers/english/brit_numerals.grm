@@ -1,0 +1,142 @@
+# English Cardinal and Ordinal numbers
+# 
+# Preliminary, use at your own risk!
+# Essentially expands numerals in British English 
+# e.g., 1101 =  1[E3]1[E2]1[E1]1 should expand as "one thousand one hundred and one" 
+# Also, OLD_STYLE has been implemented. Strings such as 1000000100 
+# should expand as 1[E3][E6]1[E2] "one thousand million one hundred" 
+#
+# Reese Bowes reesebowes@gmail
+# 11/10/2011
+
+import 'byte.grm' as bytelib; 
+import 'factorizer.grm' as factors; 
+ins_tok = "" : "[##]"; 
+
+sigma_star = bytelib.kBytes*; 
+
+cardinal_units = ("1" : "one")
+               | ("2" : "two")
+               | ("3" : "three")
+               | ("4" : "four")
+               | ("5" : "five")
+               | ("6" : "six")
+               | ("7" : "seven")
+               | ("8" : "eight")
+               | ("9" : "nine")
+               | ("1[E1]" : "ten")
+; 
+
+cardinal_teens = ("1[E1]" : "ten") 
+              | ("1[E1]1" : "eleven" <-1.0>)
+              | ("1[E1]2" : "twelve" <-1.0>)
+              | ("1[E1]3" : "thirteen" <-1.0>)
+              | ("1[E1]4" : "fourteen" <-1.0>)
+              | ("1[E1]5" : "fifteen" <-1.0>)
+              | ("1[E1]6" : "sixteen" <-1.0>)
+              | ("1[E1]7" : "seventeen" <-1.0>)
+              | ("1[E1]8" : "eighteen" <-1.0>)
+              | ("1[E1]9" : "nineteen" <-1.0>)
+; 
+
+cardinal_decades =  ("2[E1]" : "twenty")
+                 | ("3[E1]" : "thirty")
+                 | ("4[E1]" : "forty")
+                 | ("5[E1]" : "fifty")
+                 | ("6[E1]" : "sixty")
+                 | ("7[E1]" : "seventy")
+                 | ("8[E1]" : "eighty")
+                 | ("9[E1]" : "ninety")
+; 
+
+cardinal_hundreds= ("[E2]" : "hundred")
+                 | ("[E3]" : "thousand")
+                 | ("[E6]" : "million")
+;
+
+ordinal_strings = ("1" : "first")
+		 | ("2" : "second")
+		 | ("3" : "third") 
+		 | ("4" : "fourth")
+		 | ("5" : "fifth")
+		 | ("6" : "sixth")
+		 | ("7" : "seventh")
+		 | ("8" : "eighth")
+		 | ("9" : "ninth")
+; 
+
+ord_teens = ("1[E1]" : "tenth")
+          | ("1[E1]1" : "eleventh" <-1.0>)
+          | ("1[E1]2" : "twelfth" <-1.0>)
+          | ("1[E1]3" : "thirteenth" <-1.0>)
+          | ("1[E1]4" : "fourteenth" <-1.0>)
+          | ("1[E1]5" : "fifteenth" <-1.0>)
+          | ("1[E1]6" : "sixteenth" <-1.0>)
+          | ("1[E1]7" : "seventeenth" <-1.0>)
+          | ("1[E1]8" : "eighteenth" <-1.0>)
+          | ("1[E1]9" : "nineteenth" <-1.0>)
+;
+
+ord_decades = ("2[E1]" : "twentieth") 
+            | ("2[E1]" : "twentieth")
+            | ("3[E1]" : "thirtieth")
+            | ("4[E1]" : "fortieth")
+            | ("5[E1]" : "fiftieth")
+            | ("6[E1]" : "sixtieth")
+            | ("7[E1]" : "seventieth")
+            | ("8[E1]" : "eightieth")
+            | ("9[E1]" : "ninetieth")
+;
+
+ord_tens = ("[E2]" : "hundredth")
+         | ("[E3]" : "thousandth")
+         | ("[E6]" : "millionth")
+;
+
+units  = ("one")
+	| ("two") 
+	| ("three")
+	| ("four")
+	| ("five")
+	| ("six")
+	| ("seven")
+	| ("eight")
+	| ("nine") 
+	| ("ten")
+; 
+
+teens =  ("eleven")
+	| ("twelve")
+	| ("thirteen")
+	| ("fourteen") 
+	| ("fifteen")
+	| ("sixteen")
+	| ("seventeen")
+	| ("eighteen")
+	| ("nineteen")
+; 
+
+decades = ("twenty")
+	| ("thirty")
+	| ("fourty")
+	| ("fifty")
+	| ("sixty")
+	| ("seventy")
+	| ("eighty")
+	| ("ninety")
+; 
+
+verns = Optimize[ cardinal_units @ cardinal_teens @ cardinal_decades @ cardinal_hundreds]; 
+ords = Optimize[ ord_units @ ord_teens @ ord_decades @ ord_tens] 
+
+##
+ 
+ins_AND = CDRewrite["" : " and ", "", units | teens | decades, sigma_star]; 
+
+brit_com = factors.WESTERN_FACTORIZATION @ factors.OLD_STYLE @ verns ; 
+brit_ord = factors.WESTERN_FACTORIZATION @ ords; 
+
+export BRIT_COMMON = Optimize[(brit_com ins_AND)+]; 
+export BRIT_ORD = Optimize[brit_ord]; 
+
+export TOP = Optimize[(cardinal_vocabulary  ins_tok)+]; 
