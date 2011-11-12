@@ -1,0 +1,16 @@
+import 'byte.grm' as bytelib;
+
+sigma_star = bytelib.kBytes*;
+
+hour = Optimize[ (("0" | "1" ) bytelib.kDigit) | bytelib.kDigit | ("2" ("0" | "1" | "2" | "3"))]; 
+min = Optimize[(("0" | "1" | "2" | "3" | "4" | "5") bytelib.kDigit) | bytelib.kDigit ];
+sc = Optimize[((("0" | "1" | "2" | "3" | "4" | "5") bytelib.kDigit) | bytelib.kDigit) ];
+
+htag = (":" | "h") : "__HOUR ";
+mtag = (":" | "" ) : "__MIN";
+sctag = "" :"__SC";
+ttag = "" : "__TIME";
+inspace = "":" ";
+export TIMES = Optimize[ (hour htag min mtag ttag (bytelib.kPunct)*)
+  |(hour htag min mtag inspace sc sctag ttag (bytelib.kPunct)*) 
+  | (bytelib.kDigit <1.0>)*];

@@ -1,0 +1,5 @@
+TOKENIZER|It's 4:32:21 a.m.|It's 4__HOUR 32__MIN 21__SC__TIME a.m[##].
+TOKENIZER|01:34 in the morning|01__HOUR 34__MIN__TIME in the morning
+TOKENIZER|This is not a right time format: 25:32:67|This is not a right time format[##]: 25[##]:[##]32[##]:[##]67
+TOKEN It's 23:1:2! Come on!|It's 23__HOUR 1__MIN 2__SC__TIME[##]! Come on[##]!
+TOKENIZER I don't want to come at 13:01:34.|I don't want to come at 13__HOUR 01__MIN 34__SC__TIME[##].
