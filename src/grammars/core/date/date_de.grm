@@ -1,0 +1,69 @@
+# grammar for labeling dates in German text
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Some examples:
+#   der 01. Februar 2009  
+#   der 01.02.2009 
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+import 'date_common.grm' as common;
+
+# months
+month_short = 
+  tags.AFTER_NON_ALPHA
+  Optimize[
+      ("jan"   | "Jan"   | "JAN" ) tags.MONTH_31
+    | ("jän"   | "Jän"   | "JÄN" ) tags.MONTH_31
+    | ("feb"   | "Feb"   | "FEB" ) tags.MONTH_29
+    | ("märz"  | "März"  | "MÄRZ") tags.MONTH_31
+    | ("apr"   | "Apr"   | "APR" ) tags.MONTH_30
+    | ("mai"   | "Mai"   | "MAI" ) tags.MONTH_31
+    | ("juni"  | "Juni"  | "JUNI") tags.MONTH_30
+    | ("juli"  | "Juli"  | "JULI") tags.MONTH_31
+    | ("aug"   | "Aug"   | "AUG" ) tags.MONTH_31
+    | ("sept"  | "Sept"  | "SEPT") tags.MONTH_30
+    | ("okt"   | "Okt"   | "OKT" ) tags.MONTH_31
+    | ("nov"   | "Nov"   | "NOV" ) tags.MONTH_30
+    | ("dez"   | "Dez"   | "DEZ" ) tags.MONTH_31
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+month_long = 
+  tags.AFTER_NON_ALPHA
+  Optimize[ # probably never really written in lowercase
+      ("januar"    | "Januar")    tags.MONTH_31
+    | ("februar"   | "Februar")   tags.MONTH_29
+    | ("märz"      | "März")      tags.MONTH_31
+    | ("april"     | "April")     tags.MONTH_30
+    | ("mai"       | "Mai")       tags.MONTH_31
+    | ("juni"      | "Juni")      tags.MONTH_30
+    | ("juli"      | "Juli")      tags.MONTH_31
+    | ("august"    | "August")    tags.MONTH_31
+    | ("september" | "September") tags.MONTH_30
+    | ("oktober"   | "Oktober")   tags.MONTH_31
+    | ("november"  | "November")  tags.MONTH_30
+    | ("dezember"  | "Dezember")  tags.MONTH_31
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+# date formats
+date_regular = Optimize[
+  common.DAY   tags.DAY   "." " "*
+  ( month_short "."? tags.MONTH 
+  | common.MONTH_NUM "." tags.MONTH 
+  | month_long tags.MONTH " " 
+  ) " "*
+  (common.YEAR_LONG tags.YEAR | ("" <1.0>))
+  ];
+
+# textual would not be easy to handle, so I'm not handling them now
+
+# final grammar
+export DATE_DE = Optimize[
+  ( date_regular )
+  ]; 

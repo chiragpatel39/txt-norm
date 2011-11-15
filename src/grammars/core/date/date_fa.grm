@@ -1,0 +1,38 @@
+# date labeling for Farsi
+# 
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, G<E9>za Kiss
+#
+# Author: asgari@ohsu.edu (Meysam Asgari)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+
+
+zero = "۰" ;
+DigSet1 = Optimize [ "۱" | "۲" | "۳" | "۴" | "۵" | "۶" | "۷" | "۸" | "۹" ] ;
+DigSet2 = Optimize [ zero  DigSet1 ] ;
+DigSet3 = Optimize [ "۰" | "۱" | "۲" | "۳" | "۴" ] ;
+
+farsiMonth = Optimize ["فروردین" | "اردیبهشت" | "خرداد" | "تیر" | "مرداد" 
+  | "شهریور" | "آبان" | "ذر" | "دی" | "بهمن" | "اسفند" ];
+
+Month = Optimize [ DigSet1 | DigSet2 | "۱۰" | "۱۱" | "۱۲" ] ;
+Day = Optimize [ DigSet1 | DigSet2 | "۱"  DigSet1 | "۲"  DigSet1 | "۳۰"
+      | "۳۱" ];
+Year  = Optimize[ "۱" DigSet3 (DigSet1 | zero ) (DigSet1|zero)] ;
+
+
+Year_farsiMonth = Optimize [Year tags.YEAR " " farsiMonth tags.MONTH] ;
+Year_farsiMonth_Day = Optimize [ Year_farsiMonth " " Day tags.DAY ] ;
+Year_Month_Day = Optimize [ Year tags.YEAR "/" Month tags.MONTH "/" 
+  Day tags.DAY ] ;
+
+farsiMonth_Year = Optimize [farsiMonth tags.MONTH " " Year tags.YEAR ];
+Day_farsiMonth_Year = Optimize [Day tags.DAY " " farsiMonth_Year] ;
+Day_Month_Year = Optimize [Day tags.DAY "/" Month tags.MONTH "/" Year 
+  tags.YEAR] ;
+
+export DATE_FA = Optimize[ Year_farsiMonth_Day | Year_farsiMonth 
+  | Year_Month_Day | Day_farsiMonth_Year 
+  | farsiMonth_Year | Day_Month_Year ] ;

@@ -1,0 +1,103 @@
+# date sub-project members: Meysam Asgari, Hamid Mohammadi
+#
+# Author: asgari@ohsu.edu (Meysam Asgari), mohammah@ohsu.edu (Hamid Mohammadi)
+
+import 'byte.grm' as bytelib;
+
+insAnd = "" : "و" ;
+
+zero  = "0" : "zero";
+
+delzero = "0" : "";
+insspace = "" : " " ;
+
+delBase1 = "<E1>" : "" ;
+delBase2 = "<E2>" : "" ;
+delBase3 = "<E3>" : "" ;
+delBase4 = "<E4>" : "" ;
+delBase5 = "<E5>" : "" ;
+delBase6 = "<E6>" : "" ;
+delBase7 = "<E7>" : "" ;
+delBase8 = "<E8>" : "" ;
+delBase9 = "<E9>" : "" ;
+
+dahgan = "<E" ("1") ">";
+sadgan = "<E" ("2" | "5" | "8") ">";
+hezargan = "<E" ("3" | "6" | "9") ">";
+del_dahgan = dahgan : "";
+del_sadgan = sadgan : "";
+del_hezargan = hezargan : "";
+units = ("0" : "صفر") 
+      	| ("1" : "یک")
+	| ("2" : "دو")
+	| ("3" : "سه")
+	| ("4" : "چهار")
+	| ("5" : "پنج")
+	| ("6" : "شش")
+	| ("7" : "هفت")
+	| ("8" : "هشت")
+	| ("9" : "نه")
+;
+
+
+teens = ("1" dahgan "1" : "یازده")
+	| ("1" dahgan "2" : "دوازده")
+	| ("1" dahgan "3" : "سیزده")
+	| ("1" dahgan "4" : "چهارده")
+	| ("1" dahgan "5" : "پانزده")
+	| ("1" dahgan "6" : "شانزده")
+	| ("1" dahgan "7" : "هفده")
+	| ("1" dahgan "8" : "هجده")
+	| ("1" dahgan "9" : "نوزده")
+;
+
+decades = ("1" : "ده")
+	  | ("2" : "بیست")
+	  | ("3" : "سی")
+	  | ("4" : "چهل")
+	  | ("5" : "پنجاه")
+	  | ("6" : "شصت")
+	  | ("7" : "هفتاد")
+	  | ("8" : "هشتاد")
+	  | ("9" : "نود")
+;
+
+hundreds =  ("1" : "صد")
+	  | ("2" : "دویست")
+	  | ("3" : "سیصد")
+	  | ("4" : "چهارصد")
+	  | ("5" : "پانصد")
+	  | ("6" : "ششصد")
+	  | ("7" : "هفتصد")
+	  | ("8" : "هشتصد")
+	  | ("9" : "نهصد")
+;
+numbers_20_to_99 = decades delBase1  | decades delBase1 insspace insAnd insspace units ;
+numbers_to_99 = Optimize[units | teens | numbers_20_to_99] ;
+
+numbers_100_to_999 = 
+Optimize[
+  hundreds delBase2  |
+  hundreds insspace delBase2 insAnd insspace numbers_to_99]
+;
+
+
+numbers_to_999 = Optimize[numbers_to_99 | numbers_100_to_999];
+
+thousands = "" : "هزار" ;
+millions = "" : "میلیون";
+milliards = "" : "میلیارد";
+
+numbers_1000_to_999999 = numbers_to_999 insspace thousands delBase3 (insspace insAnd insspace numbers_to_999 | "") ;
+numbers_to_999999 = numbers_to_999 | numbers_1000_to_999999;
+numbers_1000000_to_999999999 = numbers_to_999 insspace millions delBase6 (insspace insAnd insspace numbers_to_999999 | "");
+numbers_to_999999999 = numbers_to_999999 | numbers_1000000_to_999999999;
+numbers_1000000000_to_999999999999 = numbers_to_999 insspace milliards delBase9 (insspace insAnd insspace numbers_to_999999999 | "");
+
+
+export NUMBERS = Optimize[ 
+  numbers_to_999 | 
+  numbers_1000_to_999999 | 
+  numbers_1000000_to_999999999 | 
+  numbers_1000000000_to_999999999999 ] 
+;

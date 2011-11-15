@@ -1,0 +1,98 @@
+# grammar containing transducers for labeling dates in several languages
+#
+# Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
+# date sub-project members: Meysam Asgari, Géza Kiss
+#
+# Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
+
+import 'byte_ext.grm' as bytelib;
+import 'date_tags.grm' as tags;
+
+###########################################
+# YEARS
+###########################################
+
+# allowed centuries (i.e. recognized as date if not much ambiguous)
+export YEAR_CENTURY = ("19" | "20"); # note: this is the only field not protected for context
+
+# allowed long date range
+export YEAR_LONG = 
+  tags.AFTER_NON_DIGIT 
+  YEAR_CENTURY bytelib.kDigit bytelib.kDigit
+  tags.BEFORE_NON_DIGIT;
+
+# shore date range
+export YEAR_SHORT = 
+  tags.AFTER_NON_DIGIT 
+  bytelib.kDigit bytelib.kDigit
+  tags.BEFORE_NON_DIGIT;
+
+# allowed date range
+export YEAR = Optimize[YEAR_LONG | YEAR_SHORT];
+
+# general date (i.e. not restricted to likely centuries): 1 - 9999
+export YEAR_GENERAL = Optimize[
+  tags.AFTER_NON_DIGIT 
+  (bytelib.kDigit - "0")
+  | (bytelib.kDigit - "0") bytelib.kDigit 
+  | (bytelib.kDigit - "0") bytelib.kDigit bytelib.kDigit 
+  | (bytelib.kDigit - "0") bytelib.kDigit bytelib.kDigit bytelib.kDigit 
+  tags.BEFORE_NON_DIGIT
+  ];
+
+###########################################
+# MONTHS
+###########################################
+export MONTH_NUM = 
+  tags.AFTER_NON_DIGIT
+  Optimize[
+      "0"? "1" tags.MONTH_31
+    | "0"? "2" tags.MONTH_29
+    | "0"? "3" tags.MONTH_31
+    | "0"? "4" tags.MONTH_30
+    | "0"? "5" tags.MONTH_31
+    | "0"? "6" tags.MONTH_30
+    | "0"? "7" tags.MONTH_31
+    | "0"? "8" tags.MONTH_31
+    | "0"? "9" tags.MONTH_30
+    | "10"     tags.MONTH_31
+    | "11"     tags.MONTH_30
+    | "12"     tags.MONTH_31
+    ]
+  tags.BEFORE_NON_DIGIT;
+
+export MONTH_ROMAN = 
+  tags.AFTER_NON_ALPHA 
+  Optimize[
+      ("i"    | "I"   ) tags.MONTH_31
+    | ("ii"   | "II"  ) tags.MONTH_29
+    | ("iii"  | "III" ) tags.MONTH_31
+    | ("iv"   | "IV"  ) tags.MONTH_30
+    | ("v"    | "V"   ) tags.MONTH_31
+    | ("vi"   | "VI"  ) tags.MONTH_30
+    | ("vii"  | "VII" ) tags.MONTH_31
+    | ("viii" | "VIII") tags.MONTH_31
+    | ("ix"   | "IX"  ) tags.MONTH_30
+    | ("x"    | "X"   ) tags.MONTH_31
+    | ("xi"   | "XI"  ) tags.MONTH_30
+    | ("xii"  | "XII" ) tags.MONTH_31
+    ]
+  tags.BEFORE_NON_ALPHA;
+
+###########################################
+# DAYS
+###########################################
+export DAY_TWO_DIGIT = 
+  tags.AFTER_NON_DIGIT
+  ( ( ("0" | "1" | "2") bytelib.kDigit - "00")
+    | "30" 
+    | "31")
+  tags.BEFORE_NON_DIGIT;
+
+export DAY_ONE_DIGIT = 
+  tags.AFTER_NON_DIGIT 
+  (bytelib.kDigit - "0") 
+  tags.BEFORE_NON_DIGIT;
+  
+export DAY = 
+  DAY_TWO_DIGIT | DAY_ONE_DIGIT;
