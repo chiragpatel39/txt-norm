@@ -1,0 +1,157 @@
+TOP|1|uno
+TOP|10|dieci
+TOP|11|undici
+TOP|20|venti
+TOP|21|ventuno
+TOP|22|ventidue
+TOP|23|ventitré
+TOP|28|ventotto
+TOP|29|ventinove
+TOP|30|trenta
+TOP|31|trentuno
+TOP|32|trentadue
+TOP|90|novanta
+TOP|99|novantanove
+TOP|100|cento
+TOP|101|centouno
+TOP|103|centotre
+TOP|108|centootto
+TOP|110|centodieci
+TOP|111|centoundici
+TOP|120|centoventi
+TOP|121|centoventuno
+TOP|130|centotrenta
+TOP|131|centotrentuno
+TOP|180|centoottanta
+TOP|188|centoottantotto
+TOP|199|centonovantanove
+TOP|200|duecento
+TOP|280|duecentoottanta
+TOP|299|duecentonovantanove
+TOP|999|novecentonovantanove
+TOP|1000|mille
+TOP|1001|milleuno
+TOP|1008|milleotto
+TOP|1011|milleundici
+TOP|1099|millenovantanove
+TOP|1100|millecento
+TOP|1101|millecentouno
+TOP|1199|millecentonovantanove
+TOP|1200|milleduecento
+TOP|1999|millenovecentonovantanove
+TOP|2000|duemila
+TOP|2001|duemilauno
+TOP|9999|novemilanovecentonovantanove
+TOP|10000|diecimila
+TOP|10001|diecimilauno
+TOP|10099|diecimilanovantanove
+TOP|10100|diecimilacento
+TOP|10101|diecimilacentouno
+TOP|99999|novantanovemilanovecentonovantanove
+TOP|100000|centomila
+TOP|900000|novecentomila
+TOP|999999|novecentonovantanovemilanovecentonovantanove
+TOP|1000000|un milione
+TOP|1000001|un milione uno
+TOP|1000010|un milione dieci
+TOP|1000099|un milione novantanove
+TOP|1000100|un milione cento
+TOP|1000101|un milione centouno
+TOP|1000110|un milione centodieci
+TOP|1000199|un milione centonovantanove
+TOP|1001000|un milione mille
+TOP|9999999|nove milioni novecentonovantanovemilanovecentonovantanove
+TOP|10000000|dieci milioni
+TOP|99000000|novantanove milioni
+TOP|100000000|cento milioni
+TOP|999999999|novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1000000000|un miliardo
+TOP|1000000001|un miliardo uno
+TOP|1000000100|un miliardo cento
+TOP|1001000001|un miliardo un milione uno
+TOP|999999999999|novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1000000000000|un bilione
+TOP|1000000000001|un bilione uno
+TOP|1000000000100|un bilione cento
+TOP|999999999999999|novecentonovantanove bilioni novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemilanovecentonovantanove
+TOP|1º|primo
+TOP|10º|decimo
+TOP|11º|undicesimo
+TOP|20º|ventesimo
+TOP|21º|ventunesimo
+TOP|22º|ventiduesimo
+TOP|23º|ventitreesimo
+TOP|24º|ventiquattresimo
+TOP|25º|venticinquesimo
+TOP|26º|ventiseiesimo
+TOP|27º|ventisettesimo
+TOP|28º|ventottesimo
+TOP|29º|ventinovesimo
+TOP|30º|trentesimo
+TOP|31º|trentunesimo
+TOP|32º|trentaduesimo
+TOP|90º|novantesimo
+TOP|99º|novantanovesimo
+TOP|100º|centesimo
+TOP|101º|centounesimo
+TOP|103º|centotreesimo
+TOP|108º|centoottesimo
+TOP|110º|centodecimo
+TOP|111º|centoundicesimo
+TOP|112º|centododicesimo
+TOP|120º|centoventesimo
+TOP|121º|centoventunesimo
+TOP|130º|centotrentesimo
+TOP|131º|centotrentunesimo
+TOP|180º|centoottantesimo
+TOP|188º|centoottantottesimo
+TOP|199º|centonovantanovesimo
+TOP|200º|duecentesimo
+TOP|280º|duecentoottantesimo
+TOP|299º|duecentonovantanovesimo
+TOP|999º|novecentonovantanovesimo
+TOP|1000º|millesimo
+TOP|1001º|milleunesimo
+TOP|1008º|milleottesimo
+TOP|1011º|milleundicesimo
+TOP|1099º|millenovantanovesimo
+TOP|1100º|millecentesimo
+TOP|1101º|millecentounesimo
+TOP|1199º|millecentonovantanovesimo
+TOP|1200º|milleduecentesimo
+TOP|1999º|millenovecentonovantanovesimo
+TOP|2000º|duemillesimo
+TOP|2001º|duemilleunesimo
+TOP|9999º|novemillenovecentonovantanovesimo
+TOP|10000º|diecimillesimo
+TOP|10001º|diecimilleunesimo
+TOP|10099º|diecimillenovantanovesimo
+TOP|10100º|diecimillecentesimo
+TOP|10101º|diecimillecentounesimo
+TOP|99999º|novantanovemillenovecentonovantanovesimo
+TOP|100000º|centomillesimo
+TOP|900000º|novecentomillesimo
+TOP|999999º|novecentonovantanovemillenovecentonovantanovesimo
+TOP|1000000º|milionesimo
+TOP|1000001º|milione primo
+TOP|1000010º|milione decimo
+TOP|1000099º|milione novantanovesimo
+TOP|1000100º|milione centesimo
+TOP|1000101º|milione centounesimo
+TOP|1000110º|milione centodecimo
+TOP|1000199º|milione centonovantanovesimo
+TOP|1001000º|milione millesimo
+TOP|9999999º|nove milioni novecentonovantanovemillenovecentonovantanovesimo
+TOP|10000000º|dieci milionesimo
+TOP|99000000º|novantanove milionesimo
+TOP|100000000º|cento milionesimo
+TOP|999999999º|novecentonovantanove milioni novecentonovantanovemillenovecentonovantanovesimo
+TOP|1000000000º|miliardesimo
+TOP|1000000001º|miliardo primo
+TOP|1000000100º|miliardo centesimo
+TOP|1001000001º|miliardo milione primo
+TOP|999999999999º|novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemillenovecentonovantanovesimo
+TOP|1000000000000º|bilionesimo
+TOP|1000000000001º|bilione primo
+TOP|1000000000100º|bilione centesimo
+TOP|999999999999999º|novecentonovantanove bilioni novecentonovantanove miliardi novecentonovantanove milioni novecentonovantanovemillenovecentonovantanovesimo
