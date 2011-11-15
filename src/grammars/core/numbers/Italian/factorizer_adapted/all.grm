@@ -184,8 +184,6 @@ sei_rule = CDRewrite["e" : "ei", "s", "esimo", sigma_star];
 
 mille_rule = CDRewrite[("a" | "e"): "le", "mil", "", sigma_star];
 
-rev_tre_rule = CDRewrite["tré" : "tre", "", "esimo", sigma_star];
-
 un_rule2 =  CDRewrite["un " : "", " " | "[BOS]" , "", sigma_star];
 
 
@@ -218,7 +216,7 @@ Decimo_Rule =  CDRewrite["diecesimo" : "decimo", "" , "", sigma_star];
 
 ordinal_1 = Optimize[ordinals @ pre_ordinal_v_drop @ OrdTre_rule @ quattr_rule
 	@ sei_rule @ mille_rule @ un_rule2 @ CardOrdUnitMap_Rule @ Decimo_Rule 
-	@ rev_tre_rule];
+	];
 
 
 ordinalFEM = CDRewrite["o" : "a",  "" , ("º__FEM" | "ª" | "º__FEM__SG")  , sigma_star];
