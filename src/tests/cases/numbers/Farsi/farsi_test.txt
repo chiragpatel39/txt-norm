@@ -1,0 +1,28 @@
+NUMBERS|0|صفر
+NUMBERS|1|یک
+NUMBERS|2|دو
+NUMBERS|3|سه
+NUMBERS|4|چهار
+NUMBERS|5|پنج
+NUMBERS|6|شش
+NUMBERS|1<E1>|ده
+NUMBERS|1<E1>1|یازده
+NUMBERS|1<E1>5|پانزده
+NUMBERS|2<E1>|بیست
+NUMBERS|2<E1>9|بیست و نه
+NUMBERS|1<E2>|صد
+NUMBERS|1<E2>1|صد و یک
+NUMBERS|1<E2>1<E1>|صد و ده
+NUMBERS|1<E2>1<E1>1|صد و یازده
+NUMBERS|2<E2>5<E1>|دویست و پنجاه
+NUMBERS|1<E3>|یک هزار
+NUMBERS|1<E3>2|یک هزار و دو
+NUMBERS|1<E3>1<E1>|یک هزار و ده
+NUMBERS|2<E1><E3>|بیست هزار
+NUMBERS|2<E1>4<E3>|بیست و چهار هزار
+NUMBERS|4<E2><E3>|چهارصد هزار
+NUMBERS|4<E2>5<E1>9<E3>6<E2>9<E1>7|چهارصد و پنجاه و نه هزار و ششصد و نود و هفت
+NUMBERS|7<E1><E6>|هفتاد میلیون
+NUMBERS|4<E2>1<E1><E6>7|چهارصد و ده میلیون و هفت
+NUMBERS|3<E9>|سه میلیارد
+NUMBERS|3<E9>1<E1>5|سه میلیارد و پانزده
