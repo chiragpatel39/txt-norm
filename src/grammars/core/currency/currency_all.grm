@@ -1,0 +1,52 @@
+# Author: morleye@gmail.com (Eric Morley)
+# Currency normalizing
+# Normalizes following cases:
+#
+#	$X -> $X.0
+#	$X.Y -> $X.Y
+#	X$Y  -> X$Y
+#	X$   -> $X.0
+#	X.Y$ -> $X.Y
+
+import 'byte.grm' as bytelib;
+import 'currency_signs.grm' as currency;
+import 'cur_Lnozero.grm' as cur_Lnozero;
+import 'cur_Lzero.grm' as cur_Lzero;
+import 'cur_center.grm' as cur_center;
+import 'cur_Rzero.grm' as cur_right;
+
+sigma_star = bytelib.kBytes*;
+digits = bytelib.kDigit+;
+space_eos = (bytelib.kSpace | "[EOS]" | ".[EOS]" | "?[EOS]" | "[BOS]");
+currency_symbol = StringFile['symbols.txt'];
+
+
+delcurrency_symbol = CDRewrite[currency_symbol : "", "", digits,
+sigma_star];
+
+# $.X-> $0.X
+ins_zero_1 = CDRewrite["" : "0", currency_symbol, ".", sigma_star];
+# .X$ -> 0.X$
+ins_zero_2 = CDRewrite["" : "0", space_eos, "." digits currency_symbol, sigma_star];
+
+ins_zero = ins_zero_1 @ ins_zero_2;
+# $X -> X _[dollar]
+l_nozero = cur_Lnozero.L_NOZERO;
+
+# $X.Y -> X _[dollar] Y _[cent]
+l_zero = cur_Lzero.L_ZERO;
+delpoint = CDRewrite["." : " ", currency_symbol digits, digits, sigma_star];
+L_cents = l_zero @ delpoint;
+left = Optimize[L_cents @ l_nozero @ delcurrency_symbol];
+
+# X$Y -> X _[dollar] Y _[cent]
+center = cur_center.CENTER;
+
+# X$ -> X _[dollar] 
+# and
+# X.Y$ -> X _[dollar] Y _[cent]
+right = cur_right.R_ZERO;
+ 
+export NORMALIZED_UNITS = Optimize[ins_zero @ center @ right @ left]; 
+
+### END OF CURRENCY SPECIFIC CODE
