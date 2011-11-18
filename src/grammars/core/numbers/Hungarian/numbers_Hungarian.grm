@@ -3,16 +3,24 @@
 # Created for the CSLU Text Normalization class (2011 Fall) project, date sub-project
 # date sub-project members: Meysam Asgari, Géza Kiss
 #
-# temp: replace <...> with [...] symbols
-#
 # Author: geza.kiss@cslu.ogi.edu (Géza Kiss)
 
-import 'byte_ext.grm' as bytelib;
+import 'byte.grm' as bytelib;
+import 'factorizer.grm' as factorizer;
+
+#kNonAlnum = Optimize[bytelib.kBytes - bytelib.kAlnum];
+kNonDigit = Optimize[bytelib.kBytes - bytelib.kDigit];
 
 tok = "[##]";
-factors = "<E" bytelib.kDigit+ ">"; #temp; "[E1]" | ... | "[E99]";
-denominator = "<denominator>"; 
-sigma = bytelib.kBytes | tok;
+factors = "[E1]" | "[E2]" | "[E3]" | "[E6]" | "[E9]" | "[E12]" | "[E15]" 
+  | "[E18]" | "[E21]" | "[E24]" | "[E27]" | "[E30]" | "[E33]" | "[E36]" 
+  | "[E39]" | "[E42]" | "[E45]" | "[E48]" | "[E51]" | "[E54]" | "[E57]" 
+  | "[E60]" | "[E63]" | "[E66]" | "[E69]" | "[E72]" | "[E75]" | "[E78]" 
+  | "[E81]" | "[E84]" | "[E87]" | "[E90]" | "[E93]" | "[E96]" | "[E99]"
+;
+
+denominator = "<denominator>"; #temp; should be "[denominator]" once the factorizer handles it
+sigma = bytelib.kBytes | tok | factors; #| denominator;
 
 ins_tok = "" : tok;
 del_one = ( ("1" <-1.0>) | "" );
@@ -28,67 +36,69 @@ cardinal_vocabulary = Optimize[
     | ("7"            : "hét")
     | ("8"            : "nyolc")
     | ("9"            : "kilenc")
-    | ("1<E1>0"       : "tíz" <-1.0>)  # we don't expect input zeros at this position, but need them here (inserted)
-    | ("2<E1>0"       : "húsz" <-1.0>) #
-    | ("1<E1>"        : "tizen" )
-    | ("2<E1>"        : "huszon")
-    | ("3<E1>"        : "harminc")
-    | ("4<E1>"        : "negyven")
-    | ("5<E1>"        : "ötven")
-    | ("6<E1>"        : "hatvan")
-    | ("7<E1>"        : "hetven")
-    | ("8<E1>"        : "nyolcvan")
-    | ("9<E1>"        : "kilencven")
-    | (del_one "<E2>" : "száz")
+    | ("1[E1]0"       : "tíz" <-1.0>)  # we don't expect input zeros at this position, but need them here (inserted)
+    | ("2[E1]0"       : "húsz" <-1.0>) #
+    | ("1[E1]"        : "tizen" )
+    | ("2[E1]"        : "huszon")
+    | ("3[E1]"        : "harminc")
+    | ("4[E1]"        : "negyven")
+    | ("5[E1]"        : "ötven")
+    | ("6[E1]"        : "hatvan")
+    | ("7[E1]"        : "hetven")
+    | ("8[E1]"        : "nyolcvan")
+    | ("9[E1]"        : "kilencven")
+    | (del_one "[E2]" : "száz")
     )
-  | ( (del_one "<E3>" : "ezer")
-    | ("<E6>"         : "millió" )
-    | ("<E9>"         : "milliárd")
-    | ("<E12>"        : "billió")
-    | ("<E15>"        : "billiárd")
-    | ("<E18>"        : "trillió")
-    | ("<E21>"        : "trilliárd")
-    | ("<E24>"        : "kvadrillió")
-    | ("<E27>"        : "kvadrilliárd")
-    | ("<E30>"        : "kvintillió")
-    | ("<E33>"        : "kvintilliárd")
-    | ("<E36>"        : "sextillió")
-    | ("<E39>"        : "sextilliárd")
-    | ("<E42>"        : "septillió")
-    | ("<E45>"        : "septilliárd")
-    | ("<E48>"        : "oktillió")
-    | ("<E51>"        : "oktilliárd")
-    | ("<E54>"        : "nonillió")
-    | ("<E57>"        : "nonilliárd")
-    | ("<E60>"        : "decillió")
-    | ("<E63>"        : "decilliárd")
-    | ("<E66>"        : "undecillió")
-    | ("<E69>"        : "undecilliárd")
-    | ("<E72>"        : "bidecillió")
-    | ("<E75>"        : "bidecilliárd")
-    | ("<E78>"        : "tridecillió")
-    | ("<E81>"        : "tridecilliárd")
-    | ("<E84>"        : "kvadecillió")
-    | ("<E87>"        : "kvadecilliárd")
-    | ("<E90>"        : "kvintdecillió")
-    | ("<E93>"        : "kvintdecilliárd")
-    | ("<E96>"        : "szexdecillió")
-    | ("<E99>"        : "szexdecilliárd")
-    | ("<E100>"       : "googol") # never used because of factorization
+  | ( (del_one "[E3]" : "ezer")
+    | ("[E6]"         : "millió" )
+    | ("[E9]"         : "milliárd")
+    | ("[E12]"        : "billió")
+    | ("[E15]"        : "billiárd")
+    | ("[E18]"        : "trillió")
+    | ("[E21]"        : "trilliárd")
+    | ("[E24]"        : "kvadrillió")
+    | ("[E27]"        : "kvadrilliárd")
+    | ("[E30]"        : "kvintillió")
+    | ("[E33]"        : "kvintilliárd")
+    | ("[E36]"        : "sextillió")
+    | ("[E39]"        : "sextilliárd")
+    | ("[E42]"        : "septillió")
+    | ("[E45]"        : "septilliárd")
+    | ("[E48]"        : "oktillió")
+    | ("[E51]"        : "oktilliárd")
+    | ("[E54]"        : "nonillió")
+    | ("[E57]"        : "nonilliárd")
+    | ("[E60]"        : "decillió")
+    | ("[E63]"        : "decilliárd")
+    | ("[E66]"        : "undecillió")
+    | ("[E69]"        : "undecilliárd")
+    | ("[E72]"        : "bidecillió")
+    | ("[E75]"        : "bidecilliárd")
+    | ("[E78]"        : "tridecillió")
+    | ("[E81]"        : "tridecilliárd")
+    | ("[E84]"        : "kvadecillió")
+    | ("[E87]"        : "kvadecilliárd")
+    | ("[E90]"        : "kvintdecillió")
+    | ("[E93]"        : "kvintdecilliárd")
+    | ("[E96]"        : "szexdecillió")
+    | ("[E99]"        : "szexdecilliárd")
+    | ("[E100]"       : "googol") # never used because of factorization
     ) ("" : "-")
   )]
 ;
 
-cardinal_numbers = Optimize[
-  ( CDRewrite["" : "0", ("1" | "2") "<E1>", factors | bytelib.kNonDigit | "[EOS]", bytelib.kBytes*] 
-  @ (cardinal_vocabulary (ins_tok cardinal_vocabulary)*)
-  @ ( ("ezer" ("-": "") <-1.0>)?
-      sigma*
-      ( ("két" : "kettő")
-      | ("-" : "")
-      <-1.0> )?
-    )
-  )]
+cardinal_numbers = 
+  factorizer.WESTERN_FACTORIZATION
+  @ Optimize[
+    ( CDRewrite["" : "0", ("1" | "2") "[E1]", factors | kNonDigit | "[EOS]", sigma*] 
+    @ (cardinal_vocabulary (ins_tok cardinal_vocabulary)*)
+    @ ( ("ezer" ("-": "") <-1.0>)?
+        sigma*
+        ( ("két" : "kettő")
+        | ("-" : "")
+        <-1.0> )?
+      )
+   )]
 ;
 
 ordinalize = Optimize[
@@ -131,20 +141,26 @@ ordinal2denominator = Optimize[
 ;
 
 export NUMBERS_HU = Optimize[
-  #WESTERN_FACTORIZATION @
-  ( ( (cardinal_numbers @ ordinalize) ("." : "") <-1.0> )
-  | ( cardinal_numbers ("," : " egész ") 
-      cardinal_numbers (denominator : " ") 
-      (cardinal_numbers @ ordinalize @ ordinal2denominator) <-10.0> )
-  | ( cardinal_numbers )
-  )]
+  ( ( ( (cardinal_numbers @ ordinalize) ("." : "") <-10.0> ) 
+    | ( cardinal_numbers ("," : " egész ") 
+        cardinal_numbers (denominator : " ") 
+        (cardinal_numbers @ ordinalize @ ordinal2denominator) <-10.0> )
+    | ( cardinal_numbers ) 
+    ) )
+  #@ ( ("[E1]" : "\[E1\]") | ("[E2]" : "\[E2\]") | ("[E3]" : "\[E3\]") #debugging
+  #  | ("[E4]" : "\[E4\]") | ("[E5]" : "\[E5\]") | ("[E6]" : "\[E6\]") 
+  #  | ("[E7]" : "\[E7\]") | ("[E8]" : "\[E8\]") | ("[E9]" : "\[E9\]") 
+  #  | ("[E10]" : "\[E10\]") | ("[E11]" : "\[E11\]") | ("[E12]" : "\[E12\]") 
+  #  | ("[E13]" : "\[E13\]") | ("[E14]" : "\[E14\]") | ("[E15]" : "\[E15\]") 
+  #  | (factors : "\[\]" <1.0>) | (tok : "\[##\]") | (bytelib.kBytes <2.0>))*
+  ]
 ;
 
 export TEXT_HU = Optimize[
-  ( (bytelib.kNonDigit* <10.0>) 
+  ( (kNonDigit* <10.0>) 
     (NUMBERS_HU <1.0>)
-    ( (bytelib.kNonDigit+ <10.0>) (NUMBERS_HU <1.0>) )* 
-    (bytelib.kNonDigit* <10.0>)
+    ( (kNonDigit+ <10.0>) (NUMBERS_HU <1.0>) )* 
+    (kNonDigit* <10.0>)
     )
   @ ( (tok : "\[##\]") | bytelib.kBytes )*
   ]
