@@ -1,0 +1,33 @@
+import 'byte.grm' as bytelib;
+import 'carninals.grm' as cardinal_numbers;
+import 'ordinals.grm' as ordinal_numbers;
+
+
+insspace = "" : " ";
+sigma_star = bytelib.kBytes*;
+
+
+
+cardinal_number = cardinal_numbers.CARDINALNUMBERS;
+ordinal_number = ordinal_numbers.ORDINALNUMBERS;
+
+cardinals_rule  = CDRewrite[cardinal_number, " " | "[BOS]", (bytelib.kSpace | "[EOS]" 
+| "__MAS" | "__FEM"), sigma_star];
+
+cardinal_una = CDRewrite["uno" : "una",  " " | "[BOS]" , "__FEM", sigma_star];
+
+cardinals = Optimize[cardinals_rule @ cardinal_una];
+
+
+ordinals = CDRewrite[ordinal_number,  " " | "[BOS]" , ("º" | "º__MAS" | "º__FEM" | "ª")
+	, sigma_star];
+
+ordinalFEM = CDRewrite["o" : "a",  "" , ("º__FEM" | "ª")  , sigma_star];
+ordinalMAS_PL = CDRewrite["o" : "i",  "" , "º__MAS__PL" , sigma_star];
+ordinalFEM_PL = CDRewrite["a" : "e",  "" , ("º" | "ª")"__FEM__PL" , sigma_star];
+ordinal_norm = CDRewrite[("º" | "ª") : "", "", "" , sigma_star];
+ordinal_phase = Optimize[ordinals @ ordinalFEM @ ordinalMAS_PL @ ordinalFEM_PL 
+	@ ordinal_norm];
+
+
+export TOP = Optimize[ ordinal_phase @ cardinals ];

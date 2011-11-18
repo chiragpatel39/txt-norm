@@ -1,0 +1,208 @@
+import 'byte.grm' as bytelib;
+
+sigma_star = bytelib.kBytes*;
+number = bytelib.kDigit+;
+space_eos = (bytelib.kSpace | "[EOS]" | ".[EOS]" | "?[EOS]" | "[BOS]");
+
+Kopek_l = CDRewrite["" : " _\[Kopek\]", space_eos "р" number "." number{1,3}, space_eos, sigma_star];
+Pul_l = CDRewrite["" : " _\[Pul\]", "؋" number "." number{1,3}, space_eos, sigma_star];
+Cent_l = CDRewrite["" : " _\[Cent\]", "€" number "." number{1,3}, space_eos, sigma_star];
+QindarkA_l = CDRewrite["" : " _\[QindarkA\]", space_eos "L" number "." number{1,3}, space_eos, sigma_star];
+Penny_l = CDRewrite["" : " _\[Penny\]", "£" number "." number{1,3}, space_eos, sigma_star];
+Santeem_l = CDRewrite["" : " _\[Santeem\]", "دج" number "." number{1,3}, space_eos, sigma_star];
+CAantimo_l = CDRewrite["" : " _\[CAantimo\]", "Kz" number "." number{1,3}, space_eos, sigma_star];
+Cent1_l = CDRewrite["" : " _\[Cent\]", space_eos "$" number "." number{1,3}, space_eos, sigma_star];
+Luma_l = CDRewrite["" : " _\[Luma\]", "դր" number "." number{1,3}, space_eos, sigma_star];
+Cent2_l = CDRewrite["" : " _\[Cent\]", "ƒ" number "." number{1,3}, space_eos, sigma_star];
+QEpik_l = CDRewrite["" : " _\[QEpik\]", space_eos "m" number "." number{1,3}, space_eos, sigma_star];
+Fils_l = CDRewrite["" : " _\[Fils\]", "دب" number "." number{1,3}, space_eos, sigma_star];
+Paisa_l = CDRewrite["" : " _\[Paisa\]", "Tk৳" number "." number{1,3}, space_eos, sigma_star];
+Kapyeyka_l = CDRewrite["" : " _\[Kapyeyka\]", "Br" number "." number{1,3}, space_eos, sigma_star];
+Centime_l = CDRewrite["" : " _\[Centime\]", "Fr" number "." number{1,3}, space_eos, sigma_star];
+Chetrum_l = CDRewrite["" : " _\[Chetrum\]", "Nu" number "." number{1,3}, space_eos, sigma_star];
+Paisa1_l = CDRewrite["" : " _\[Paisa\]", "₹" number "." number{1,3}, space_eos, sigma_star];
+Centavo_l = CDRewrite["" : " _\[Centavo\]", "Bs" number "." number{1,3}, space_eos, sigma_star];
+Fening_l = CDRewrite["" : " _\[Fening\]", "KM" number "." number{1,3}, space_eos, sigma_star];
+Thebe_l = CDRewrite["" : " _\[Thebe\]", "P" number "." number{1,3}, space_eos, sigma_star];
+Centavo1_l = CDRewrite["" : " _\[Centavo\]", "R$" number "." number{1,3}, space_eos, sigma_star];
+Stotinka_l = CDRewrite["" : " _\[Stotinka\]", "лв" number "." number{1,3}, space_eos, sigma_star];
+Pya_l = CDRewrite["" : " _\[Pya\]", space_eos "K" number "." number{1,3}, space_eos, sigma_star];
+Sen_l = CDRewrite["" : " _\[Sen\]", "Rl" number "." number{1,3}, space_eos, sigma_star];
+Centavo2_l = CDRewrite["" : " _\[Centavo\]", "Esc" number "." number{1,3}, space_eos, sigma_star];
+Fen_l = CDRewrite["" : " _\[Fen\]", "元" number "." number{1,3}, space_eos, sigma_star];
+CAcntimo_l = CDRewrite["" : " _\[CAcntimo\]", "₡" number "." number{1,3}, space_eos, sigma_star];
+Lipa_l = CDRewrite["" : " _\[Lipa\]", "kn" number "." number{1,3}, space_eos, sigma_star];
+HalAcA_l = CDRewrite["" : " _\[HalAcA\]", "Kč" number "." number{1,3}, space_eos, sigma_star];
+Are_l = CDRewrite["" : " _\[Are\]", "kr" number "." number{1,3}, space_eos, sigma_star];
+Pence_l = CDRewrite["" : " _\[Pence\]", "£" number "." number{1,3}, space_eos, sigma_star];
+Cent3_l = CDRewrite["" : " _\[Cent\]", "Nfk" number "." number{1,3}, space_eos, sigma_star];
+Butut_l = CDRewrite["" : " _\[Butut\]", space_eos "D" number "." number{1,3}, space_eos, sigma_star];
+Tetri_l = CDRewrite["" : " _\[Tetri\]", "ლ" number "." number{1,3}, space_eos, sigma_star];
+Pesewa_l = CDRewrite["" : " _\[Pesewa\]", "₵" number "." number{1,3}, space_eos, sigma_star];
+Centavo3_l = CDRewrite["" : " _\[Centavo\]", space_eos "Q" number "." number{1,3}, space_eos, sigma_star];
+Centime1_l = CDRewrite["" : " _\[Centime\]", space_eos "G" number "." number{1,3}, space_eos, sigma_star];
+FillAcr_l = CDRewrite["" : " _\[FillAcr\]", "Ft" number "." number{1,3}, space_eos, sigma_star];
+Sen1_l = CDRewrite["" : " _\[Sen\]", "Rp" number "." number{1,3}, space_eos, sigma_star];
+Dinar_l = CDRewrite["" : " _\[Dinar\]", "﷼" number "." number{1,3}, space_eos, sigma_star];
+Fils1_l = CDRewrite["" : " _\[Fils\]", "عد" number "." number{1,3}, space_eos, sigma_star];
+Agora_l = CDRewrite["" : " _\[Agora\]", "₪" number "." number{1,3}, space_eos, sigma_star];
+Sen2_l = CDRewrite["" : " _\[Sen\]", "¥" number "." number{1,3}, space_eos, sigma_star];
+Piastre_l = CDRewrite["" : " _\[Piastre\]", "دا" number "." number{1,3}, space_eos, sigma_star];
+TAAn_l = CDRewrite["" : " _\[TAAn\]", "₸" number "." number{1,3}, space_eos, sigma_star];
+Cent4_l = CDRewrite["" : " _\[Cent\]", "Sh" number "." number{1,3}, space_eos, sigma_star];
+Chon_l = CDRewrite["" : " _\[Chon\]", "₩" number "." number{1,3}, space_eos, sigma_star];
+Fils2_l = CDRewrite["" : " _\[Fils\]", "دك" number "." number{1,3}, space_eos, sigma_star];
+Att_l = CDRewrite["" : " _\[Att\]", "₭" number "." number{1,3}, space_eos, sigma_star];
+SantAms_l = CDRewrite["" : " _\[SantAms\]", "Ls" number "." number{1,3}, space_eos, sigma_star];
+Piastre1_l = CDRewrite["" : " _\[Piastre\]", "لل" number "." number{1,3}, space_eos, sigma_star];
+Cent5_l = CDRewrite["" : " _\[Cent\]", space_eos "R" number "." number{1,3}, space_eos, sigma_star];
+Dirham_l = CDRewrite["" : " _\[Dirham\]", "لد" number "." number{1,3}, space_eos, sigma_star];
+Centas_l = CDRewrite["" : " _\[Centas\]", "Lt" number "." number{1,3}, space_eos, sigma_star];
+Deni_l = CDRewrite["" : " _\[Deni\]", "ден" number "." number{1,3}, space_eos, sigma_star];
+Iraimbilanja_l = CDRewrite["" : " _\[Iraimbilanja\]", "Ar" number "." number{1,3}, space_eos, sigma_star];
+Tambala_l = CDRewrite["" : " _\[Tambala\]", "MK" number "." number{1,3}, space_eos, sigma_star];
+Sen3_l = CDRewrite["" : " _\[Sen\]", "RM" number "." number{1,3}, space_eos, sigma_star];
+Laari_l = CDRewrite["" : " _\[Laari\]", "ރ" number "." number{1,3}, space_eos, sigma_star];
+Khoums_l = CDRewrite["" : " _\[Khoums\]", "UM" number "." number{1,3}, space_eos, sigma_star];
+Cent6_l = CDRewrite["" : " _\[Cent\]", "₨" number "." number{1,3}, space_eos, sigma_star];
+MAPngAP_l = CDRewrite["" : " _\[MAPngAP\]", "₮" number "." number{1,3}, space_eos, sigma_star];
+Centime2_l = CDRewrite["" : " _\[Centime\]", "دم" number "." number{1,3}, space_eos, sigma_star];
+Centavo4_l = CDRewrite["" : " _\[Centavo\]", "MT" number "." number{1,3}, space_eos, sigma_star];
+Centavo5_l = CDRewrite["" : " _\[Centavo\]", "C$" number "." number{1,3}, space_eos, sigma_star];
+Kobo_l = CDRewrite["" : " _\[Kobo\]", "₦" number "." number{1,3}, space_eos, sigma_star];
+KuruA_l = CDRewrite["" : " _\[KuruA\]", "TL" number "." number{1,3}, space_eos, sigma_star];
+Baisa_l = CDRewrite["" : " _\[Baisa\]", "رع" number "." number{1,3}, space_eos, sigma_star];
+CentAcsimo_l = CDRewrite["" : " _\[CentAcsimo\]", "B/" number "." number{1,3}, space_eos, sigma_star];
+CAcntimo1_l = CDRewrite["" : " _\[CAcntimo\]", "₲" number "." number{1,3}, space_eos, sigma_star];
+CAcntimo2_l = CDRewrite["" : " _\[CAcntimo\]", "S/" number "." number{1,3}, space_eos, sigma_star];
+Centavo6_l = CDRewrite["" : " _\[Centavo\]", "₱" number "." number{1,3}, space_eos, sigma_star];
+Grosz_l = CDRewrite["" : " _\[Grosz\]", "zł" number "." number{1,3}, space_eos, sigma_star];
+Dirham1_l = CDRewrite["" : " _\[Dirham\]", "رق" number "." number{1,3}, space_eos, sigma_star];
+Kopek1_l = CDRewrite["" : " _\[Kopek\]", "руб" number "." number{1,3}, space_eos, sigma_star];
+Centime3_l = CDRewrite["" : " _\[Centime\]", "د م" number "." number{1,3}, space_eos, sigma_star];
+Sene_l = CDRewrite["" : " _\[Sene\]",  space_eos "T" number "." number{1,3}, space_eos, sigma_star];
+CAantimo1_l = CDRewrite["" : " _\[CAantimo\]", "Db" number "." number{1,3}, space_eos, sigma_star];
+Hallallah_l = CDRewrite["" : " _\[Hallallah\]", "رس" number "." number{1,3}, space_eos, sigma_star];
+Para_l = CDRewrite["" : " _\[Para\]", "дин" number "." number{1,3}, space_eos, sigma_star];
+Cent7_l = CDRewrite["" : " _\[Cent\]", "Le" number "." number{1,3}, space_eos, sigma_star];
+Cent8_l = CDRewrite["" : " _\[Cent\]", "Rs" number "." number{1,3}, space_eos, sigma_star];
+Piastre2_l = CDRewrite["" : " _\[Piastre\]", "لس" number "." number{1,3}, space_eos, sigma_star];
+Diram_l = CDRewrite["" : " _\[Diram\]", "ЅМ" number "." number{1,3}, space_eos, sigma_star];
+Satang_l = CDRewrite["" : " _\[Satang\]", "฿" number "." number{1,3}, space_eos, sigma_star];
+Seniti_l = CDRewrite["" : " _\[Seniti\]", "T$" number "." number{1,3}, space_eos, sigma_star];
+Millime_l = CDRewrite["" : " _\[Millime\]", "دت" number "." number{1,3}, space_eos, sigma_star];
+Kopiyka_l = CDRewrite["" : " _\[Kopiyka\]", "₴" number "." number{1,3}, space_eos, sigma_star];
+Fils3_l = CDRewrite["" : " _\[Fils\]", "دإ" number "." number{1,3}, space_eos, sigma_star];
+None_l = CDRewrite["" : " _\[None\]", "Vt" number "." number{1,3}, space_eos, sigma_star];
+CAcntimo3_l = CDRewrite["" : " _\[CAcntimo\]", "Bs F" number "." number{1,3}, space_eos, sigma_star];
+HAo_l = CDRewrite["" : " _\[HAo\]", "₫" number "." number{1,3}, space_eos, sigma_star];
+Ngwee_l = CDRewrite["" : " _\[Ngwee\]", "ZK" number "." number{1,3}, space_eos, sigma_star];
+
+tmp_2 = Optimize[Kopek_l
+  @ Pul_l
+  @ Cent_l
+  @ QindarkA_l
+  @ Penny_l
+  @ Santeem_l
+  @ CAantimo_l
+  @ Cent1_l
+  @ Luma_l
+  @ Cent2_l
+  @ QEpik_l
+  @ Fils_l
+  @ Paisa_l
+  @ Kapyeyka_l
+  @ Centime_l
+];
+
+tmp_3 = Optimize[Chetrum_l
+  @ Paisa1_l
+  @ Centavo_l
+  @ Fening_l
+  @ Thebe_l
+  @ Centavo1_l
+  @ Stotinka_l
+  @ Pya_l
+  @ Sen_l
+  @ Centavo2_l
+  @ Fen_l
+  @ CAcntimo_l
+  @ Lipa_l
+  @ HalAcA_l
+  @ Are_l
+];
+
+tmp_4 = Optimize[Pence_l
+  @ Cent3_l
+  @ Butut_l
+  @ Tetri_l
+  @ Pesewa_l
+  @ Centavo3_l
+  @ Centime1_l
+  @ FillAcr_l
+  @ Sen1_l
+  @ Dinar_l
+  @ Fils1_l
+  @ Agora_l
+  @ Sen2_l
+  @ Piastre_l
+  @ TAAn_l
+];
+
+tmp_5 = Optimize[Cent4_l
+  @ Chon_l
+  @ Fils2_l
+  @ Att_l
+  @ SantAms_l
+  @ Piastre1_l
+  @ Cent5_l
+  @ Dirham_l
+  @ Centas_l
+  @ Deni_l
+  @ Iraimbilanja_l
+  @ Tambala_l
+  @ Sen3_l
+  @ Laari_l
+  @ Khoums_l
+];
+
+tmp_6 = Optimize[Cent6_l
+  @ MAPngAP_l
+  @ Centime2_l
+  @ Centavo4_l
+  @ Centavo5_l
+  @ Kobo_l
+  @ KuruA_l
+  @ Baisa_l
+  @ CentAcsimo_l
+  @ CAcntimo1_l
+  @ CAcntimo2_l
+  @ Centavo6_l
+  @ Grosz_l
+  @ Dirham1_l
+  @ Kopek1_l
+];
+
+tmp_7 = Optimize[Centime3_l
+  @ Sene_l
+  @ CAantimo1_l
+  @ Hallallah_l
+  @ Para_l
+  @ Cent7_l
+  @ Cent8_l
+  @ Piastre2_l
+  @ Diram_l
+  @ Satang_l
+  @ Seniti_l
+  @ Millime_l
+  @ Kopiyka_l
+  @ Fils3_l
+  @ None_l
+];
+
+tmp_8 = Optimize[CAcntimo3_l
+  @ HAo_l
+  @ Ngwee_l
+];
+
+export L_ZERO = Optimize[tmp_2 @ tmp_3 @ tmp_4 @ tmp_5 @ tmp_6 @ tmp_7 @ tmp_8];

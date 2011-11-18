@@ -1,0 +1,79 @@
+import 'byte.grm' as bytelib;
+import 'factorizer.grm' as factorizer;
+
+cardinal_vocabulary =
+    ("1" : "bat")
+  | ("2" : "bi")
+  | ("3" : "hiru")
+  | ("4" : "lau")
+  | ("5" : "bost")
+  | ("6" : "sei")
+  | ("7" : "zazpi")
+  | ("8" : "zortzi")
+  | ("9" : "bederatzi")
+  | ("1<E1>" : "hamar" <-1.0>)
+  | ("1<E1>1" : "hamaika" <-1.0>)
+  | ("1<E1>2" : "hamabi" <-1.0>)
+  | ("1<E1>3" : "hamahiru" <-1.0>)
+  | ("1<E1>4" : "hamalau" <-1.0>)
+  | ("1<E1>5" : "hamabost" <-1.0>)
+  | ("1<E1>6" : "hamasei" <-1.0>)
+  | ("1<E1>7" : "hamazazpi" <-1.0>)
+  | ("1<E1>8" : "hemezortzi" <-1.0>)
+  | ("1<E1>9" : "hemeretzi" <-1.0>)
+  | ("1<20E1>" : "hogei" <-1.0>)
+  | ("2<20E1>" : "berrogei" <-1.0>)
+  | ("3<20E1>" : "hirurogei" <-1.0>)
+  | ("4<20E1>" : "laurogei" <-1.0>)
+  | ("<E2>" : "ehun")
+  | ("2<E2>" : "berrehun")
+  | ("3<E2>" : "hirurehun")
+  | ("4<E2>" : "laurehun")
+  | ("<E3>" : "mila")
+  | ("<E6>" : "milioi")
+  | ("<E12>" : "bilioi")
+  | ("ta" : "ta")
+  | ("bat" : "bat")
+  | ("eta" : "eta")
+;
+
+ins_tok = "" : "\[##\]";
+sigma_star = bytelib.kBytes*;
+one_tag = "bat";
+
+millions= CDRewrite["1<E6>":"<E6>bat",("[BOS]"|"\[##\]"),"", sigma_star];
+billions= CDRewrite["1<E12>":"<E12>bat",("[BOS]"|"\[##\]"),"", sigma_star];
+thousands= CDRewrite["1":"",("[BOS]"|"\[##\]"|("E6>"|"E12>") one_tag*), ("<E3>"|"<E2>"), sigma_star];
+twenties = CDRewrite["":"ta","<20E1>", bytelib.kDigit, sigma_star];
+
+highpow = ((("<E12>"|"<E6>") one_tag*)|"<E3>");
+and2 = CDRewrite["":"eta","<E2>", (bytelib.kDigit (("<E1>"|"<20E1>") bytelib.kDigit*)*), sigma_star];
+and3 = CDRewrite["":"eta",highpow, (bytelib.kDigit (("<E1>"|"<20E1>") bytelib.kDigit*)*) (("<E3>")* ("[EOS]"|"\[##\]")), sigma_star];
+and1 = CDRewrite["":"eta",highpow, ((bytelib.kDigit* "<E2>" ("<E3>")*) | (bytelib.kDigit* "<E3>")) ("\[##\]"|"[EOS]"),sigma_star];
+
+and= and1 @ and2 @ and3;
+one = billions @ millions @ thousands;
+
+units = ("bost" | "sei" | "zazpi" | "zortzi" | "bederatzi");
+del_tok1 = CDRewrite["\[##\]":"","", "ta\[##\]", sigma_star];
+del_tok2 = CDRewrite["\[##\]":"",units, "ehun", sigma_star];
+del_tok = del_tok1 @ del_tok2;
+
+cards = cardinal_vocabulary (ins_tok cardinal_vocabulary)*;
+rules = one @ and @ twenties;
+
+#factorization terms
+western_fact=factorizer.WESTERN_FACTORIZATION;
+vig_fact= factorizer.VIG_TRANSFORM;
+old_style = factorizer.OLD_STYLE;
+tag = (("\[" : "<")
+       |("\]" : ">"));
+
+#export CARDINAL_NUMBERS = Optimize[western_fact @ vig_fact @ old_style @ tag @ rules @ cards @ del_tok]; 
+export CARDINAL_NUMBERS = Optimize[rules @ cards @ del_tok];
+
+ordinal_mark = ("."|"garren"):"garren";
+export ORDINAL_NUMBERS = 
+       (("bat" : "lehen") 
+        | ("bost" : "bosgarren")
+	| (CARDINAL_NUMBERS ordinal_mark));

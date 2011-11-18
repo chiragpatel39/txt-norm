@@ -1,0 +1,9 @@
+CARDINAL_NUMBERS|1<20E1>1<E3>4<E2>1|hogeita[##]bat[##]mila[##]laurehun[##]eta[##]bat
+CARDINAL_NUMBERS|1<E6><E3>1<20E1>1<E1>2|milioi[##]bat[##]mila[##]eta[##]hogeita[##]hamabi
+CARDINAL_NUMBERS|4<20E1>1<E1>1<E3>1|laurogeita[##]hamaika[##]mila[##]eta[##]bat
+CARDINAL_NUMBERS|4<E6>2<20E1>1<E1>2<E3>1<20E1>|lau[##]milioi[##]berrogeita[##]hamabi[##]mila[##]eta[##]hogei
+CARDINAL_NUMBERS|3<20E1>1<E12>1<E2>1<E1>3<E3>1<E1>|hirurogeita[##]bat[##]bilioi[##]ehun[##]eta[##]hamahiru[##]mila[##]eta[##]hamar
+CARDINAL_NUMBERS|1<E12>1<E1>1<E3>|bilioi[##]bat[##]eta[##]hamaika[##]mila
+CARDINAL_NUMBERS|1<E12>5<E2>|bilioi[##]bat[##]eta[##]bostehun
+CARDINAL_NUMBERS|4<20E1>1<E6>1<E2><E3>|laurogeita[##]bat[##]milioi[##]eta[##]ehun[##]mila
+CARDINAL_NUMBERS|4<20E1><E6>3<E2><E3>|laurogei[##]milioi[##]eta[##]hirurehun[##]mila
